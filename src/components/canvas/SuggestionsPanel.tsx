@@ -3,6 +3,7 @@ import { Lightbulb, ChevronDown, ChevronUp } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 
 const COLLAPSED_MAX_HEIGHT = 180
+const OVERFLOW_THRESHOLD = 60
 
 interface SuggestionsPanelProps {
   suggestions: string
@@ -20,7 +21,8 @@ export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
 
   useEffect(() => {
     if (contentRef.current) {
-      setNeedsExpand(contentRef.current.scrollHeight > COLLAPSED_MAX_HEIGHT)
+      const overflow = contentRef.current.scrollHeight - COLLAPSED_MAX_HEIGHT
+      setNeedsExpand(overflow > OVERFLOW_THRESHOLD)
     }
   }, [body])
 
