@@ -1,16 +1,26 @@
 import { Settings, FolderOpen, LayoutTemplate, History } from 'lucide-react'
 import { Button } from '../shared/Button'
+import { useAppStore } from '../../store'
 
 interface ToolbarProps {
   onOpenSettings: () => void
 }
 
 export function Toolbar({ onOpenSettings }: ToolbarProps) {
+  const isDemoMode = useAppStore((s) => s.isDemoMode)
+
   return (
     <header className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-4">
-      <span className="font-mono text-sm font-semibold tracking-tight text-text">
-        PromptComposer
-      </span>
+      <div className="flex items-center gap-2">
+        <span className="font-mono text-sm font-semibold tracking-tight text-text">
+          PromptComposer
+        </span>
+        {isDemoMode && (
+          <span className="inline-flex items-center rounded-full border border-amber-500/25 bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-400">
+            Demo
+          </span>
+        )}
+      </div>
 
       <div className="flex items-center gap-1">
         <Button

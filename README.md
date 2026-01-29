@@ -18,7 +18,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173, click the gear icon to enter your Anthropic API key, and start composing.
+Open http://localhost:5173 and start composing. You can either enter your own Anthropic API key in Settings, or enable Demo Mode to try the app with simulated AI responses (no API key needed).
 
 ## Current Features (v1)
 
@@ -30,8 +30,9 @@ Open http://localhost:5173, click the gear icon to enter your Anthropic API key,
 - **Suggestions Panel** -- After refinement, a collapsible panel below the prompt shows clarifying questions, ideas, and edge cases. These are never copied -- only the prompt goes to your clipboard.
 - **Editable Canvas** -- The generated prompt is always editable. Modify it directly before copying.
 - **Copy Prompt** -- Copies the prompt (excluding suggestions) to clipboard. Also available via `Cmd+Shift+C`.
-- **Settings** -- API key (stored in localStorage, never sent anywhere except Anthropic API) and model selection (Sonnet, Haiku, Opus).
-- **Persistence** -- Sidebar inputs and settings survive page refresh. Canvas content is ephemeral.
+- **Demo Mode** -- Toggle in Settings to try the app without an API key. Streams pre-crafted responses with realistic chunked timing, exercising the full UI (streaming animation, canvas editor, suggestions panel). Cycles through 3 example responses across different domains (software engineering, technical writing, data analysis). An amber "DEMO" badge appears in the toolbar when active. The API key input is greyed out while demo mode is on; toggling it off restores BYOK functionality with any previously saved key.
+- **Settings** -- API key (stored in localStorage, never sent anywhere except Anthropic API), model selection (Sonnet, Haiku, Opus), and demo mode toggle.
+- **Persistence** -- Sidebar inputs and settings (including demo mode preference) survive page refresh. Canvas content is ephemeral.
 
 ## Design Decisions
 

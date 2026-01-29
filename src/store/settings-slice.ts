@@ -7,9 +7,11 @@ export const createSettingsSlice: StateCreator<AppStore, [], [], SettingsState> 
   apiKey: '',
   selectedModel: DEFAULT_MODEL,
   isSettingsOpen: false,
+  isDemoMode: false,
 
   setApiKey: (key) => set({ apiKey: key }),
   setSelectedModel: (model) => set({ selectedModel: model }),
   toggleSettings: () => set((s) => ({ isSettingsOpen: !s.isSettingsOpen })),
   setSettingsOpen: (open) => set({ isSettingsOpen: open }),
+  setDemoMode: (enabled) => set({ isDemoMode: enabled }),
 })

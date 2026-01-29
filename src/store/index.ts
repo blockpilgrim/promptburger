@@ -24,6 +24,7 @@ export const useAppStore = create<AppStore>()(
           blocks: state.blocks,
           apiKey: state.apiKey,
           selectedModel: state.selectedModel,
+          isDemoMode: state.isDemoMode,
         }),
       },
     ),
