@@ -1,0 +1,70 @@
+import type { RoleOption } from './roles'
+
+// --- Sidebar Block ---
+export interface SidebarBlock {
+  id: string
+  type: string
+  label: string
+  content: string
+  enabled: boolean
+}
+
+// --- Sidebar Slice ---
+export interface SidebarState {
+  selectedRoles: RoleOption[]
+  taskBraindump: string
+  constraints: string
+  blocks: SidebarBlock[]
+
+  setSelectedRoles: (roles: RoleOption[]) => void
+  setTaskBraindump: (text: string) => void
+  setConstraints: (text: string) => void
+  addBlock: (block: SidebarBlock) => void
+  updateBlock: (id: string, content: string) => void
+  removeBlock: (id: string) => void
+  clearAll: () => void
+}
+
+// --- Canvas Slice ---
+export interface CanvasState {
+  content: string
+  suggestions: string
+  isEditable: boolean
+  isEditing: boolean
+  lastRefinedAt: number | null
+
+  setContent: (content: string) => void
+  setSuggestions: (suggestions: string) => void
+  setIsEditable: (editable: boolean) => void
+  setIsEditing: (editing: boolean) => void
+  clearCanvas: () => void
+}
+
+// --- Settings Slice ---
+export interface SettingsState {
+  apiKey: string
+  selectedModel: string
+  isSettingsOpen: boolean
+
+  setApiKey: (key: string) => void
+  setSelectedModel: (model: string) => void
+  toggleSettings: () => void
+  setSettingsOpen: (open: boolean) => void
+}
+
+// --- UI Slice ---
+export interface UIState {
+  isRefining: boolean
+  streamedContent: string
+  toastMessage: string | null
+  toastType: 'success' | 'error' | null
+
+  setIsRefining: (refining: boolean) => void
+  setStreamedContent: (content: string) => void
+  appendStreamedContent: (chunk: string) => void
+  showToast: (message: string, type: 'success' | 'error') => void
+  clearToast: () => void
+}
+
+// --- Combined ---
+export type AppStore = SidebarState & CanvasState & SettingsState & UIState
