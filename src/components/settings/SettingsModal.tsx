@@ -41,7 +41,7 @@ export function SettingsModal() {
       <div className="space-y-5">
         <div className="flex items-center justify-between rounded-lg border border-border bg-surface-alt px-4 py-3">
           <div className="flex items-center gap-3">
-            <Play className="h-4 w-4 text-amber-400" />
+            <Play className="h-4 w-4 text-accent-foreground" />
             <div>
               <p className="text-sm font-medium text-text">Demo Mode</p>
               <p className="text-xs text-text-muted/70">
@@ -57,7 +57,7 @@ export function SettingsModal() {
             className={cn(
               'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
-              isDemoMode ? 'bg-amber-500' : 'bg-border',
+              isDemoMode ? 'bg-accent' : 'bg-border',
             )}
           >
             <span

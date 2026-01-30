@@ -23,8 +23,8 @@ export function Toast({ message, type, onDismiss }: ToastProps) {
       className={cn(
         'fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium shadow-lg',
         'animate-in slide-in-from-bottom-4 fade-in duration-200',
-        type === 'success' && 'bg-emerald-600 text-white',
-        type === 'error' && 'bg-red-600 text-white',
+        type === 'success' && 'bg-success text-white',
+        type === 'error' && 'bg-danger text-white',
       )}
     >
       {type === 'success' ? (

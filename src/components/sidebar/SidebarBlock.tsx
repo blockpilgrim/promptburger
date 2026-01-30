@@ -16,7 +16,7 @@ export function SidebarBlock({ id, label, content }: SidebarBlockProps) {
     <div className="relative">
       <button
         onClick={() => removeBlock(id)}
-        className="absolute right-0 top-0 rounded p-0.5 text-text-muted hover:text-red-400 transition-colors"
+        className="absolute right-0 top-0 rounded p-0.5 text-text-muted hover:text-danger transition-colors"
         aria-label={`Remove ${label} block`}
       >
         <X className="h-3.5 w-3.5" />

@@ -54,7 +54,7 @@ export function RoleSelector() {
             'bg-primary/20 text-primary rounded-md px-2 py-0.5 text-xs font-medium',
           multiValueLabel: () => '',
           multiValueRemove: () =>
-            'ml-1 hover:text-red-400 cursor-pointer opacity-70 hover:opacity-100',
+            'ml-1 hover:text-danger cursor-pointer opacity-70 hover:opacity-100',
           placeholder: () => 'text-text-muted/60',
           input: () => 'text-text text-sm',
           noOptionsMessage: () => 'px-3 py-2 text-sm text-text-muted',

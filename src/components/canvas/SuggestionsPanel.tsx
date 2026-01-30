@@ -37,7 +37,7 @@ export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
     <div className="border-t border-border bg-surface/50 p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Lightbulb className="h-4 w-4 text-amber-400" />
+          <Lightbulb className="h-4 w-4 text-accent-foreground" />
           <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
             Suggestions for Improvement
           </span>
@@ -70,7 +70,7 @@ export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
             ul: ({ children }) => <ul className="space-y-2.5">{children}</ul>,
             li: ({ children }) => (
               <li className="flex gap-2">
-                <span className="text-amber-400/70 shrink-0">•</span>
+                <span className="text-accent-foreground/70 shrink-0">•</span>
                 <span>{children}</span>
               </li>
             ),

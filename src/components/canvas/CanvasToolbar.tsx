@@ -51,7 +51,7 @@ export function CanvasToolbar({ onReRefine }: CanvasToolbarProps) {
             size="sm"
             onClick={clearCanvas}
             leftIcon={<Trash2 className="h-3.5 w-3.5" />}
-            className="text-text-muted hover:text-red-400"
+            className="text-text-muted hover:text-danger"
           >
             Clear
           </Button>

@@ -10,7 +10,7 @@ const variants = {
   ghost:
     'text-text-muted hover:text-text hover:bg-surface-raised focus-visible:ring-border',
   danger:
-    'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500',
+    'bg-danger text-white hover:bg-danger-hover focus-visible:ring-danger',
 } as const
 
 const sizes = {

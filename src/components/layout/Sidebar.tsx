@@ -32,7 +32,7 @@ export function Sidebar({ children, footer }: SidebarProps) {
             size="sm"
             onClick={handleClearAll}
             leftIcon={<Trash2 className="h-3 w-3" />}
-            className="text-text-muted hover:text-red-400"
+            className="text-text-muted hover:text-danger"
           >
             Clear All
           </Button>

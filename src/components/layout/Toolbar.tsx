@@ -16,7 +16,7 @@ export function Toolbar({ onOpenSettings }: ToolbarProps) {
           PromptComposer
         </span>
         {isDemoMode && (
-          <span className="inline-flex items-center rounded-full border border-amber-500/25 bg-amber-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-400">
+          <span className="inline-flex items-center rounded-full border border-accent/25 bg-accent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent-foreground">
             Demo
           </span>
         )}
