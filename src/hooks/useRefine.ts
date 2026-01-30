@@ -21,6 +21,9 @@ export function useRefine() {
       return
     }
 
+    const previousPrompt = state.content
+    const previousSuggestions = state.suggestions
+
     state.setIsRefining(true)
     state.setStreamedContent('')
     state.setContent('')
@@ -72,6 +75,8 @@ export function useRefine() {
         constraints: state.constraints,
         examples: state.examples,
         blocks: state.blocks,
+        previousPrompt,
+        previousSuggestions,
       })
 
       streamRefinement(

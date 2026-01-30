@@ -1,9 +1,21 @@
 import { useState, useRef, useEffect } from 'react'
 import { ChefHat, ChevronDown, ChevronUp } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
+import { AddToFieldMenu } from './AddToFieldMenu'
 
 const COLLAPSED_MAX_HEIGHT = 180
 const OVERFLOW_THRESHOLD = 60
+
+function SuggestionItem({ children }: { children?: React.ReactNode }) {
+  const textRef = useRef<HTMLSpanElement>(null)
+  return (
+    <li className="flex gap-2 group items-start">
+      <span className="text-accent-foreground/70 shrink-0 mt-0.5">•</span>
+      <span ref={textRef} className="flex-1">{children}</span>
+      <AddToFieldMenu getText={() => textRef.current?.textContent || ''} />
+    </li>
+  )
+}
 
 interface SuggestionsPanelProps {
   suggestions: string
@@ -68,12 +80,7 @@ export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
           components={{
             p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
             ul: ({ children }) => <ul className="space-y-2.5">{children}</ul>,
-            li: ({ children }) => (
-              <li className="flex gap-2">
-                <span className="text-accent-foreground/70 shrink-0">•</span>
-                <span>{children}</span>
-              </li>
-            ),
+            li: SuggestionItem,
             strong: ({ children }) => (
               <strong className="font-medium text-text-muted">{children}</strong>
             ),

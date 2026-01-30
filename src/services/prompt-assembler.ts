@@ -7,6 +7,8 @@ interface AssemblerInput {
   constraints: string
   examples: string
   blocks: SidebarBlock[]
+  previousPrompt?: string
+  previousSuggestions?: string
 }
 
 export function assembleUserMessage(input: AssemblerInput): string {
@@ -37,6 +39,14 @@ export function assembleUserMessage(input: AssemblerInput): string {
     if (block.enabled && block.content.trim()) {
       parts.push(`**${block.label}:**\n${block.content.trim()}`)
     }
+  }
+
+  if (input.previousPrompt?.trim()) {
+    const prevParts = [`**Previous Prompt Output:**\n${input.previousPrompt.trim()}`]
+    if (input.previousSuggestions?.trim()) {
+      prevParts.push(`**Previous Suggestions:**\n${input.previousSuggestions.trim()}`)
+    }
+    parts.push(`---\n\n**Previous Generation (for iteration):**\n\n${prevParts.join('\n\n')}`)
   }
 
   return parts.join('\n\n')
