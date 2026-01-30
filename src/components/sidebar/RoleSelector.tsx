@@ -12,7 +12,7 @@ export function RoleSelector() {
   return (
     <div>
       <label className="mb-1.5 block text-sm font-medium text-text-muted">
-        Role(s)
+        Seasoning
       </label>
       <CreatableSelect<RoleOption, true, GroupBase<RoleOption>>
         isMulti
@@ -27,8 +27,8 @@ export function RoleSelector() {
           }
           setSelectedRoles([...selectedRoles, newRole])
         }}
-        placeholder="Select or type a role..."
-        formatCreateLabel={(input) => `Add custom: "${input}"`}
+        placeholder={`Role assignments ("Act as a...")`}
+        formatCreateLabel={(input) => `Add role: "${input}"`}
         unstyled
         classNames={{
           control: ({ isFocused }) =>

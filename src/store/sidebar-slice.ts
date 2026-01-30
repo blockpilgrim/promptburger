@@ -3,13 +3,17 @@ import type { AppStore, SidebarState } from '../types'
 
 export const createSidebarSlice: StateCreator<AppStore, [], [], SidebarState> = (set) => ({
   selectedRoles: [],
+  context: '',
   taskBraindump: '',
   constraints: '',
+  examples: '',
   blocks: [],
 
   setSelectedRoles: (roles) => set({ selectedRoles: roles }),
+  setContext: (text) => set({ context: text }),
   setTaskBraindump: (text) => set({ taskBraindump: text }),
   setConstraints: (text) => set({ constraints: text }),
+  setExamples: (text) => set({ examples: text }),
 
   addBlock: (block) =>
     set((s) => ({ blocks: [...s.blocks, block] })),
@@ -27,8 +31,10 @@ export const createSidebarSlice: StateCreator<AppStore, [], [], SidebarState> = 
   clearAll: () =>
     set({
       selectedRoles: [],
+      context: '',
       taskBraindump: '',
       constraints: '',
+      examples: '',
       blocks: [],
     }),
 })

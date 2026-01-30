@@ -1,4 +1,4 @@
-import { Sparkles } from 'lucide-react'
+import { Flame } from 'lucide-react'
 import { useAppStore } from '../../store'
 import { Button } from '../shared/Button'
 
@@ -18,10 +18,10 @@ export function RefineButton({ onRefine }: RefineButtonProps) {
         onClick={onRefine}
         isLoading={isRefining}
         disabled={!taskBraindump.trim()}
-        leftIcon={!isRefining ? <Sparkles className="h-4 w-4" /> : undefined}
+        leftIcon={!isRefining ? <Flame className="h-4 w-4" /> : undefined}
         className="w-full"
       >
-        {isRefining ? 'Refining...' : 'Refine with AI'}
+        {isRefining ? 'Grilling...' : 'Fire the Grill'}
       </Button>
     </div>
   )

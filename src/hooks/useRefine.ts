@@ -12,12 +12,12 @@ export function useRefine() {
     const state = useAppStore.getState()
 
     if (!state.isDemoMode && !state.apiKey) {
-      state.showToast('Please set your API key in Settings.', 'error')
+      state.showToast('Set your API key in Kitchen Settings first.', 'error')
       return
     }
 
     if (!state.taskBraindump.trim()) {
-      state.showToast('Please enter a task description.', 'error')
+      state.showToast('Every burger needs a patty! Add a task description.', 'error')
       return
     }
 
@@ -65,8 +65,10 @@ export function useRefine() {
     } else {
       const userMessage = assembleUserMessage({
         selectedRoles: state.selectedRoles,
+        context: state.context,
         taskBraindump: state.taskBraindump,
         constraints: state.constraints,
+        examples: state.examples,
         blocks: state.blocks,
       })
 

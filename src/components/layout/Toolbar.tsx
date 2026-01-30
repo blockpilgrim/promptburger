@@ -1,5 +1,6 @@
 import { Settings, FolderOpen, LayoutTemplate, History } from 'lucide-react'
 import { Button } from '../shared/Button'
+import { BurgerIcon } from '../shared/BurgerIcon'
 import { useAppStore } from '../../store'
 
 interface ToolbarProps {
@@ -12,8 +13,9 @@ export function Toolbar({ onOpenSettings }: ToolbarProps) {
   return (
     <header className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-4">
       <div className="flex items-center gap-2">
+        <BurgerIcon className="h-5 w-5 text-primary" />
         <span className="font-mono text-sm font-semibold tracking-tight text-text">
-          PromptComposer
+          PromptBurger
         </span>
         {isDemoMode && (
           <span className="inline-flex items-center rounded-full border border-accent/25 bg-accent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent-foreground">

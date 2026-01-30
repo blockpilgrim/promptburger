@@ -1,4 +1,4 @@
-import { Clipboard, RefreshCw, Trash2 } from 'lucide-react'
+import { Package, Flame, Trash2 } from 'lucide-react'
 import { useAppStore } from '../../store'
 import { useClipboard } from '../../hooks/useClipboard'
 import { Button } from '../shared/Button'
@@ -20,7 +20,7 @@ export function CanvasToolbar({ onReRefine }: CanvasToolbarProps) {
   return (
     <div className="flex items-center justify-between border-b border-border px-4 py-2">
       <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
-        {isRefining ? 'Generating...' : 'Prompt'}
+        {isRefining ? 'Grilling...' : 'Your Burger'}
       </span>
 
       <div className="flex items-center gap-1">
@@ -29,9 +29,9 @@ export function CanvasToolbar({ onReRefine }: CanvasToolbarProps) {
             variant="ghost"
             size="sm"
             onClick={onReRefine}
-            leftIcon={<RefreshCw className="h-3.5 w-3.5" />}
+            leftIcon={<Flame className="h-3.5 w-3.5" />}
           >
-            Re-refine
+            Re-grill
           </Button>
         )}
 
@@ -40,9 +40,9 @@ export function CanvasToolbar({ onReRefine }: CanvasToolbarProps) {
           size="sm"
           onClick={() => copyToClipboard(content)}
           disabled={!content || isRefining}
-          leftIcon={<Clipboard className="h-3.5 w-3.5" />}
+          leftIcon={<Package className="h-3.5 w-3.5" />}
         >
-          Copy Prompt
+          Bag It
         </Button>
 
         {hasContent && !isRefining && (
@@ -53,7 +53,7 @@ export function CanvasToolbar({ onReRefine }: CanvasToolbarProps) {
             leftIcon={<Trash2 className="h-3.5 w-3.5" />}
             className="text-text-muted hover:text-danger"
           >
-            Clear
+            Clear Plate
           </Button>
         )}
       </div>

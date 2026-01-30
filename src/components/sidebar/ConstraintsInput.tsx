@@ -8,7 +8,7 @@ export function ConstraintsInput() {
 
   return (
     <Textarea
-      label="Constraints"
+      label="Special Instructions"
       placeholder={CONSTRAINTS_PLACEHOLDER}
       value={constraints}
       onChange={(e) => setConstraints(e.target.value)}

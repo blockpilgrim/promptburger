@@ -8,8 +8,8 @@ export function AddBlockButton() {
   const handleAdd = () => {
     addBlock({
       id: crypto.randomUUID(),
-      type: 'custom',
-      label: 'Custom Block',
+      type: 'topping',
+      label: 'Extra Topping',
       content: '',
       enabled: true,
     })
@@ -23,7 +23,7 @@ export function AddBlockButton() {
       leftIcon={<Plus className="h-4 w-4" />}
       className="w-full justify-center border border-dashed border-border"
     >
-      Add Block
+      Add Topping
     </Button>
   )
 }

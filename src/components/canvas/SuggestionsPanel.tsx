@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Lightbulb, ChevronDown, ChevronUp } from 'lucide-react'
+import { ChefHat, ChevronDown, ChevronUp } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 
 const COLLAPSED_MAX_HEIGHT = 180
@@ -37,9 +37,9 @@ export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
     <div className="border-t border-border bg-surface/50 p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Lightbulb className="h-4 w-4 text-accent-foreground" />
+          <ChefHat className="h-4 w-4 text-accent-foreground" />
           <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
-            Suggestions for Improvement
+            Chef's Notes
           </span>
         </div>
         {needsExpand && (

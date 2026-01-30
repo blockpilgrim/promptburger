@@ -12,7 +12,7 @@ export function Sidebar({ children, footer }: SidebarProps) {
   const clearAll = useAppStore((s) => s.clearAll)
   const clearCanvas = useAppStore((s) => s.clearCanvas)
   const hasContent = useAppStore(
-    (s) => s.selectedRoles.length > 0 || s.taskBraindump || s.constraints || s.blocks.length > 0,
+    (s) => s.selectedRoles.length > 0 || s.context || s.taskBraindump || s.constraints || s.examples || s.blocks.length > 0,
   )
 
   const handleClearAll = () => {
@@ -24,7 +24,7 @@ export function Sidebar({ children, footer }: SidebarProps) {
     <aside className="flex w-[33%] min-w-[300px] max-w-[420px] shrink-0 flex-col border-r border-border bg-surface">
       <div className="flex items-center justify-between border-b border-border px-4 py-2">
         <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
-          Inputs
+          Ingredients
         </span>
         {hasContent && (
           <Button
@@ -34,7 +34,7 @@ export function Sidebar({ children, footer }: SidebarProps) {
             leftIcon={<Trash2 className="h-3 w-3" />}
             className="text-text-muted hover:text-danger"
           >
-            Clear All
+            New Order
           </Button>
         )}
       </div>

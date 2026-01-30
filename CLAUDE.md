@@ -13,11 +13,11 @@ No test framework is configured.
 
 ## Architecture
 
-**PromptComposer** is a single-page React app for crafting AI prompts. Users fill in structured inputs (roles, task, constraints, custom blocks), click "Refine with AI," and get a polished prompt streamed back from Claude via the Anthropic SDK.
+**PromptBurger** is a single-page React app for crafting AI prompts. Users fill in structured inputs (roles, task, constraints, custom blocks), click "Refine with AI," and get a polished prompt streamed back from Claude via the Anthropic SDK.
 
 ### Tech Stack
 
-React 19, TypeScript, Vite 7, Tailwind CSS 4 (custom dark theme defined in `src/index.css`), Zustand 5 for state management, Anthropic SDK (browser-side streaming).
+React 19, TypeScript, Vite 7, Tailwind CSS 4 (custom warm theme defined in `src/index.css`), Zustand 5 for state management, Anthropic SDK (browser-side streaming).
 
 ### Layout
 
@@ -31,7 +31,7 @@ Zustand store in `src/store/` with four slices combined in `index.ts`:
 - **settings** — API key, selected model
 - **ui** — streaming state, toast notifications
 
-Selected fields persist to localStorage under key `promptcomposer-store`.
+Selected fields persist to localStorage under key `promptburger-store`.
 
 ### Data Flow
 
@@ -53,5 +53,5 @@ Located in `src/components/ui/`: Button (variants/sizes/loading), Modal, Toast, 
 ### Global Keyboard Shortcuts
 
 Defined in `App.tsx`:
-- `Cmd/Ctrl + Enter` — Refine with AI
+- `Cmd/Ctrl + Enter` — Fire the Grill
 - `Cmd/Ctrl + Shift + C` — Copy prompt to clipboard

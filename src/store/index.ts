@@ -16,11 +16,13 @@ export const useAppStore = create<AppStore>()(
         ...createUISlice(...a),
       }),
       {
-        name: 'promptcomposer-store',
+        name: 'promptburger-store',
         partialize: (state) => ({
           selectedRoles: state.selectedRoles,
+          context: state.context,
           taskBraindump: state.taskBraindump,
           constraints: state.constraints,
+          examples: state.examples,
           blocks: state.blocks,
           apiKey: state.apiKey,
           selectedModel: state.selectedModel,

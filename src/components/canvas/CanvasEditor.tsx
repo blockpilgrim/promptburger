@@ -16,7 +16,7 @@ export function CanvasEditor() {
       }}
       readOnly={isRefining}
       className="h-full min-h-0 w-full resize-none bg-transparent font-mono text-sm text-text focus:outline-none"
-      placeholder="Your refined prompt will appear here..."
+      placeholder="Your freshly grilled prompt lands here..."
       spellCheck={false}
     />
   )

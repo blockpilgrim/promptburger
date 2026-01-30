@@ -12,13 +12,17 @@ export interface SidebarBlock {
 // --- Sidebar Slice ---
 export interface SidebarState {
   selectedRoles: RoleOption[]
+  context: string
   taskBraindump: string
   constraints: string
+  examples: string
   blocks: SidebarBlock[]
 
   setSelectedRoles: (roles: RoleOption[]) => void
+  setContext: (text: string) => void
   setTaskBraindump: (text: string) => void
   setConstraints: (text: string) => void
+  setExamples: (text: string) => void
   addBlock: (block: SidebarBlock) => void
   updateBlock: (id: string, content: string) => void
   removeBlock: (id: string) => void

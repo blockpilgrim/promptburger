@@ -8,7 +8,7 @@ export function useClipboard() {
     async (text: string) => {
       try {
         await navigator.clipboard.writeText(text)
-        showToast('Prompt copied to clipboard!', 'success')
+        showToast('Bagged and ready! Copied to clipboard.', 'success')
       } catch {
         showToast('Failed to copy. Try selecting and copying manually.', 'error')
       }

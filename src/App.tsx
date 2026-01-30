@@ -3,8 +3,10 @@ import { AppShell } from './components/layout/AppShell'
 import { Sidebar } from './components/layout/Sidebar'
 import { Canvas } from './components/layout/Canvas'
 import { RoleSelector } from './components/sidebar/RoleSelector'
+import { ContextInput } from './components/sidebar/ContextInput'
 import { TaskInput } from './components/sidebar/TaskInput'
 import { ConstraintsInput } from './components/sidebar/ConstraintsInput'
+import { ExamplesInput } from './components/sidebar/ExamplesInput'
 import { AddBlockButton } from './components/sidebar/AddBlockButton'
 import { RefineButton } from './components/sidebar/RefineButton'
 import { SidebarBlock } from './components/sidebar/SidebarBlock'
@@ -64,8 +66,10 @@ export default function App() {
         sidebar={
           <Sidebar footer={<RefineButton onRefine={refine} />}>
             <RoleSelector />
+            <ContextInput />
             <TaskInput />
             <ConstraintsInput />
+            <ExamplesInput />
             {blocks.map((block) => (
               <SidebarBlock
                 key={block.id}

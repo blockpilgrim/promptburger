@@ -36,7 +36,7 @@ export function SettingsModal() {
     <Modal
       isOpen={isOpen}
       onClose={() => setSettingsOpen(false)}
-      title="Settings"
+      title="Kitchen Settings"
     >
       <div className="space-y-5">
         <div className="flex items-center justify-between rounded-lg border border-border bg-surface-alt px-4 py-3">
@@ -45,7 +45,7 @@ export function SettingsModal() {
             <div>
               <p className="text-sm font-medium text-text">Demo Mode</p>
               <p className="text-xs text-text-muted/70">
-                Try the app with simulated AI responses
+                Try the app with sample orders
               </p>
             </div>
           </div>

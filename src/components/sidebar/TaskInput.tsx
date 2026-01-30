@@ -8,7 +8,7 @@ export function TaskInput() {
 
   return (
     <Textarea
-      label="Task"
+      label="The Patty"
       placeholder={TASK_PLACEHOLDER}
       value={taskBraindump}
       onChange={(e) => setTaskBraindump(e.target.value)}
