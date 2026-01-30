@@ -1,168 +1,197 @@
-import type { RoleOption } from '../types'
+import type { RoleOption } from "../types";
 
 export interface DemoScenario {
   sidebar: {
-    roles: RoleOption[]
-    task: string
-    constraints: string
-  }
-  response: string
+    roles: RoleOption[];
+    context: string;
+    task: string;
+    constraints: string;
+    examples: string;
+  };
+  response: string;
 }
 
 const DEMO_SCENARIOS: DemoScenario[] = [
   {
     sidebar: {
-      roles: [
-        { value: 'backend-developer', label: 'Backend Developer', group: 'Backend' },
-        { value: 'api-designer', label: 'API Designer', group: 'Backend' },
-      ],
-      task: 'Build a paginated REST API endpoint for user activity logs. Need filtering by date range and activity type, cursor-based pagination, and sorting. Should handle large datasets efficiently.',
-      constraints: 'Must complete within 500ms for up to 1M rows. No OFFSET pagination. Validate and sanitize all query parameters. Follow existing error handling patterns.',
+      roles: [{ value: "copywriter", label: "Copywriter", group: "Content" }],
+      context:
+        "relaunching our product next month. current landing page is super corporate and doesn't convert. we make a project mgmt tool for small creative teams — freelancers, designers, small agencies. nothing enterprise, more lightweight and opinionated",
+      task: "rewrite the hero section and the 3 value prop blocks. needs to feel relatable and punchy, not like every other saas page. someone should want to try it within 10 seconds of landing on the page",
+      constraints:
+        '- under 150 words total across hero + 3 value props\n- no buzzwords (synergy, leverage, streamline, etc)\n- copy needs to stand alone without images\n- CTA button says "Start free" not "Sign up"',
+      examples:
+        'tone we like — basecamp ("the all-in-one toolkit for working remotely"), linear ("built for the way modern software teams work")\n\ntone we do NOT like — "unlock the power of seamless collaboration with our industry-leading platform"',
     },
-    response: `Act as an expert software engineer specializing in backend API development and database optimization.
+    response: `Act as an expert copywriter specializing in conversion-focused SaaS landing pages.
 
 ## Objective
 
-Implement a paginated REST API endpoint for retrieving user activity logs with filtering, sorting, and cursor-based pagination.
+Rewrite the hero section and three value proposition blocks for a lightweight project management tool aimed at small creative teams — freelancers, designers, and small agencies.
 
 ## Requirements
 
-- Support filtering by date range, activity type, and user ID
-- Implement cursor-based pagination with configurable page size (default: 50, max: 200)
-- Return results sorted by timestamp descending by default, with an optional sort parameter
-- Include total count in response metadata
-- Return 400 for invalid filter combinations with descriptive error messages
+- Hero copy must communicate what the tool does and who it's for within the first line
+- Each value prop block leads with a benefit, not a feature
+- Total word count across hero + 3 value prop blocks: under 150 words
+- CTA text is "Start free" (not "Sign up" or "Get started")
+- Copy must work on its own without supporting images or illustrations
 
-## Response Format
+## Tone
 
-Return JSON with this structure:
-- \`data\`: Array of activity log objects
-- \`pagination\`: Object with \`cursor\`, \`hasMore\`, \`totalCount\`
-- \`meta\`: Object with \`requestId\`, \`processingTimeMs\`
+- Human, direct, punchy — reads like a person talking, not a brand committee
+- No corporate buzzwords: "synergy," "leverage," "streamline," "seamless," "empower," "unlock" are all off limits
+- Aspirational but grounded — closer to Basecamp and Linear than enterprise SaaS
 
-## Constraints
+## Reference Points
 
-- Query must complete within 500ms for datasets up to 1M rows
-- Do not use OFFSET-based pagination
-- All query parameters must be validated and sanitized before use
-- Follow existing error handling patterns in the codebase
+**Match this feel:**
+- "The all-in-one toolkit for working remotely" (Basecamp)
+- "Built for the way modern software teams work" (Linear)
+
+**Avoid this feel:**
+- "Unlock the power of seamless collaboration with our industry-leading platform"
 
 ---
 
 ## Suggestions for Improvement
 
-- **Caching strategy**: Consider whether results should be cached, and if so, what invalidation strategy to use. Frequently-accessed date ranges could benefit from a short TTL cache.
-- **Rate limiting**: Should this endpoint have specific rate limits, especially for large page sizes?
-- **Field selection**: Consider allowing clients to specify which fields to return to reduce payload size.
-- **Export use case**: If this data will be exported in bulk, a separate streaming endpoint may be more appropriate than pagination.
-- **Audit sensitivity**: Activity logs may contain sensitive data. Clarify whether any fields need to be redacted based on the requesting user's permissions.`,
+- **Differentiator**: What makes this tool different from Basecamp, Asana, or Notion? A single sharp differentiator in the hero will do more than three generic value props.
+- **Audience specificity**: "Small creative teams" covers a range. A solo freelancer and a 10-person agency have different pain points — which one is the primary target?
+- **Social proof**: Consider whether the hero section should include a trust signal (user count, notable client, star rating). These significantly impact conversion even when copy is strong.
+- **Below-the-fold context**: What comes after the value props? Knowing the full page structure helps ensure the hero doesn't try to do too much.
+- **Mobile reading**: At 150 words across 4 blocks, each block is ~35 words. That's tight — make sure the constraint allows enough room to say something meaningful in each block.`,
+  },
+  {
+    sidebar: {
+      roles: [{ value: "editor", label: "Editor", group: "Content" }],
+      context:
+        "writing my quarterly update for leadership. my team is growth engineering, 6 people. mixed quarter — shipped some big wins but missed our main activation target. leadership reads like 20 of these so it has to be really skimmable",
+      task: "draft the update. should be honest about what didn't work without sounding like we're making excuses. highlight the wins but don't sugarcoat the miss",
+      constraints:
+        "- one page max, bullets over paragraphs\n- use [placeholder] for numbers i'll fill in\n- no fluffy intro, start with the headline metric\n- end with \"what we're changing\" section, 3 bullets max",
+      examples:
+        'opening from last quarter that landed well:\n"Activation hit 38% (target: 35%). Three experiments drove the lift — onboarding checklist (+4pp), simplified pricing page (+2pp), email sequence rewrite (+1.5pp)."',
+    },
+    response: `Act as an expert editor specializing in concise executive communication.
+
+## Objective
+
+Draft a one-page quarterly update for a 6-person growth engineering team. The quarter included significant wins but missed the primary activation target. The update will be read by senior leadership alongside approximately 20 other team updates.
+
+## Requirements
+
+- Open with the headline metric and result vs. target — no preamble or context-setting paragraph
+- Present both wins and the activation miss with equal directness
+- Use [placeholder] brackets for specific numbers to be filled in later
+- Close with a "What we're changing" section containing exactly 3 bullets
+
+## Tone
+
+- Honest and confident — own the miss without being defensive or making excuses
+- Factual over narrative — let the numbers carry the weight
+- Skimmable in under 60 seconds
+
+## Format
+
+- Bullet-heavy, one page maximum
+- Structure:
+  - **Headline number** — activation result vs. target, one line
+  - **What shipped** — deliverables with measured impact
+  - **What missed and why** — the gap and contributing factors
+  - **What we're changing** — 3 specific actions for next quarter
+
+## Reference
+
+Previous quarter's opening that resonated with leadership:
+"Activation hit 38% (target: 35%). Three experiments drove the lift — onboarding checklist (+4pp), simplified pricing page (+2pp), email sequence rewrite (+1.5pp)."
+
+---
+
+## Suggestions for Improvement
+
+- **Trend vs. target**: Did activation improve from Q2 to Q3 but miss an aggressive Q4 target? That's a different narrative than a decline. Clarify the trajectory.
+- **Attribution**: Can you isolate which shipped projects impacted activation specifically? This helps explain whether the miss was an execution problem or a target-setting problem.
+- **Peer context**: If activation dipped across multiple teams or the whole platform, mentioning that reframes the miss without sounding like an excuse.
+- **Impact sizing**: For the "what we're changing" section, include expected impact estimates so leadership can judge whether the plan is sized to close the gap.
+- **Audience priorities**: Does this leadership group care more about the absolute number or the rate of improvement? That changes which data to lead with.`,
   },
   {
     sidebar: {
       roles: [
-        { value: 'technical-writer', label: 'Technical Writer', group: 'Specialized' },
+        {
+          value: "facilitator",
+          label: "Workshop Facilitator",
+          group: "Specialized",
+        },
       ],
-      task: 'Write a blog post explaining why and when to migrate from REST to GraphQL. Target audience is mid-level developers who know REST but haven\'t used GraphQL.',
-      constraints: '8-10 minute read (~2500 words). Use TypeScript code examples. Conversational but precise tone. Define jargon on first use.',
+      context:
+        "running a brainstorm with our product team next week. 12 people — mix of designers, engineers, PMs. trying to figure out what to build next quarter. team morale is kinda low bc leadership killed last quarter's big project",
+      task: "need an agenda and activities for a 90 min workshop. should get people energized and thinking creatively, not just the loudest voices talking. want to end with a prioritized list of ideas we can actually act on",
+      constraints:
+        "- 90 min hard cap\n- regular conference room, whiteboard + sticky notes, nothing fancy\n- has to work for introverts too\n- include time for each section\n- no cheesy icebreakers please",
+      examples:
+        "format that worked for us last time:\n- 5 min context setting (just the problem, no solutions)\n- 10 min silent brainstorm on stickies\n- small group clusters then whole group share\n- dot voting to rank ideas",
     },
-    response: `Act as an expert technical writer and developer advocate with deep experience in API architecture.
+    response: `Act as an expert workshop facilitator with experience running product ideation sessions for cross-functional teams.
 
 ## Objective
 
-Write a technical blog post explaining the migration from REST to GraphQL, targeting mid-level developers who have REST experience but limited GraphQL exposure.
+Design a 90-minute brainstorming workshop for a 12-person product team (designers, engineers, PMs) to generate and prioritize ideas for the next quarter's roadmap. The team's morale is low after last quarter's project was cancelled, so the session needs to re-energize while producing actionable output.
 
-## Content Requirements
+## Requirements
 
-- Open with a concrete pain point that REST introduces at scale (over-fetching, multiple round trips)
-- Explain GraphQL's core concepts using a real-world analogy, not textbook definitions
-- Include a side-by-side comparison of the same data-fetching scenario in REST vs GraphQL
-- Address the top 3 misconceptions about GraphQL (it replaces REST entirely, it is only for React, it solves all API problems)
-- Close with a practical decision framework: when to choose GraphQL vs REST vs both
+- Total duration: exactly 90 minutes, with time allocation for each section
+- Must produce a ranked list of ideas the team can act on immediately after the session
+- Activities must give equal voice to introverts and extroverts — no open-floor-only formats
+- Standard conference room setup only: whiteboard, sticky notes, markers. No special tools or software
+- No forced icebreakers or activities unrelated to the work
 
-## Style and Tone
+## Facilitation Approach
 
-- Conversational but technically precise
-- Use code examples in TypeScript
-- Target reading time: 8-10 minutes (approximately 2000-2500 words)
-- Avoid jargon without explanation; define terms on first use
+- Open with honest context-setting that acknowledges the previous quarter without dwelling on it
+- Use silent individual work before any group discussion
+- Small groups (3-4 people) before whole-group sharing to reduce social pressure
+- End with a concrete prioritization exercise that produces a clear ranked output
 
-## Structure
+## Desired Output
 
-- Use descriptive H2 headings (not generic ones like "Introduction")
-- Include at least 2 code blocks comparing approaches
-- End each major section with a one-sentence takeaway
+A written agenda including:
+- Section name, purpose, and duration for each block
+- Facilitator instructions for each activity
+- Transition cues between sections
+
+## Reference Format
+
+A structure that previously worked well with this team:
+- 5 min context setting (problem only, no solutions)
+- 10 min silent brainstorm on sticky notes
+- Small group clustering, then whole group share
+- Dot voting to rank
 
 ---
 
 ## Suggestions for Improvement
 
-- **Target audience specificity**: Are readers full-stack developers, frontend-focused, or backend-focused? This affects which pain points to emphasize.
-- **Real vs hypothetical examples**: Should the code examples use a specific domain (e.g., e-commerce, social media) for consistency throughout the post?
-- **Performance data**: Including benchmark numbers (e.g., "reduced payload size by 40%") would strengthen the argument. Do you have real metrics to reference?
-- **Call to action**: Should the post link to a follow-up tutorial, a starter repo, or documentation?
-- **Versioning consideration**: GraphQL tooling evolves quickly. Specify whether examples should use Apollo, urql, or framework-agnostic fetch.`,
+- **Scope constraint**: Should ideas be limited to a specific theme, customer problem, or product area? Fully open brainstorms tend to produce scattered results that are hard to compare during voting.
+- **Decision criteria**: What lens should the team use when dot-voting? "Impact vs. effort" is common, but given the cancelled project, "feasible within one quarter" or "tied to a known user problem" might be more useful criteria.
+- **Energy read**: Consider opening with a quick one-word check-in (not an icebreaker — just a read on the room). Lets you calibrate pacing and tone in real time.
+- **Follow-up ownership**: 90 minutes likely won't fully spec the top ideas. Build in a 5-minute close where you assign owners to flesh out the top 3 by a specific date.
+- **Psychological safety**: Teams recovering from a killed project often self-censor toward safe ideas. The facilitator should explicitly name that bold ideas are welcome — otherwise the output will skew conservative.`,
   },
-  {
-    sidebar: {
-      roles: [
-        { value: 'data-engineer', label: 'Data Engineer', group: 'Specialized' },
-      ],
-      task: 'Analyze why user engagement dropped in Q4 compared to Q3. Need to identify root causes and recommend fixes. Look at retention, feature adoption, session frequency.',
-      constraints: 'Use existing analytics data only. Include confidence intervals. Recommendations must be actionable within a 2-week sprint. Clearly distinguish correlation from causation.',
-    },
-    response: `Act as an expert data analyst and product strategist with experience in cohort analysis and retention modeling.
+];
 
-## Objective
-
-Analyze the user engagement drop observed in the Q4 cohort and produce an actionable report identifying root causes and recommending interventions.
-
-## Analysis Scope
-
-- Compare Q4 cohort (Oct-Dec sign-ups) against Q3 cohort on: Day 1/7/30 retention, feature adoption rates, session frequency, and time-to-first-value
-- Segment by acquisition channel, plan tier, and company size
-- Identify the specific step in the onboarding funnel where Q4 diverges from Q3
-- Correlate engagement drop with any product changes shipped in October-December
-
-## Output Format
-
-Structure the report as:
-- **Executive Summary**: 3-4 sentences with the key finding and top recommendation
-- **Key Metrics Dashboard**: A comparison table of Q3 vs Q4 cohort KPIs
-- **Funnel Analysis**: Step-by-step breakdown showing where drop-off occurs
-- **Segment Deep Dive**: Which segments are most and least affected
-- **Root Cause Hypotheses**: Ranked by likelihood with supporting evidence
-- **Recommendations**: Specific, prioritized actions with expected impact
-
-## Constraints
-
-- Use only data from the existing analytics warehouse; do not require new instrumentation
-- All percentage changes must include confidence intervals
-- Recommendations must be actionable within a 2-week sprint cycle
-- Distinguish between correlation and causation explicitly
-
----
-
-## Suggestions for Improvement
-
-- **Baseline definition**: How is "engagement" currently defined? DAU/MAU ratio, specific feature usage, or session-based? The metric definition will significantly affect findings.
-- **Statistical significance**: What sample sizes are available per segment? Small cohorts in some channels may make segment-level conclusions unreliable.
-- **External factors**: Were there seasonal effects (holidays), pricing changes, or competitor launches during Q4 that should be controlled for?
-- **Qualitative data**: Are there user surveys, support tickets, or NPS responses from Q4 that could complement the quantitative analysis?
-- **Success metric for interventions**: How will you measure whether recommended changes actually improve engagement? Define the target metric and threshold before implementing.`,
-  },
-]
-
-let demoIndex = 0
+let demoIndex = 0;
 
 export function getDemoScenario(): DemoScenario {
-  return DEMO_SCENARIOS[demoIndex % DEMO_SCENARIOS.length]
+  return DEMO_SCENARIOS[demoIndex % DEMO_SCENARIOS.length];
 }
 
 export function advanceDemoScenario(): DemoScenario {
-  demoIndex++
-  return DEMO_SCENARIOS[demoIndex % DEMO_SCENARIOS.length]
+  demoIndex++;
+  return DEMO_SCENARIOS[demoIndex % DEMO_SCENARIOS.length];
 }
 
 export function resetDemoIndex(): void {
-  demoIndex = 0
+  demoIndex = 0;
 }

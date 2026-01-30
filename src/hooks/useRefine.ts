@@ -42,8 +42,10 @@ export function useRefine() {
       if (s.isDemoMode) {
         const next = advanceDemoScenario()
         s.setSelectedRoles(next.sidebar.roles)
+        s.setContext(next.sidebar.context)
         s.setTaskBraindump(next.sidebar.task)
         s.setConstraints(next.sidebar.constraints)
+        s.setExamples(next.sidebar.examples)
       }
     }
 
