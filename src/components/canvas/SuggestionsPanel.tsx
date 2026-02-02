@@ -38,11 +38,6 @@ export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
     }
   }, [body])
 
-  // Reset expanded state when suggestions change
-  useEffect(() => {
-    setExpanded(false)
-  }, [suggestions])
-
   if (!body) return null
 
   return (
