@@ -1,4 +1,4 @@
-import { Package, Flame, Trash2 } from 'lucide-react'
+import { ClipboardCopy, Flame, Trash2 } from 'lucide-react'
 import { useAppStore } from '../../store'
 import { useClipboard } from '../../hooks/useClipboard'
 import { Button } from '../shared/Button'
@@ -40,7 +40,7 @@ export function CanvasToolbar({ onReRefine }: CanvasToolbarProps) {
           size="sm"
           onClick={() => copyToClipboard(content)}
           disabled={!content || isRefining}
-          leftIcon={<Package className="h-3.5 w-3.5" />}
+          leftIcon={<ClipboardCopy className="h-3.5 w-3.5" />}
         >
           Bag It
         </Button>
