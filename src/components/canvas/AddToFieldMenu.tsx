@@ -69,8 +69,8 @@ export function AddToFieldMenu({ getText }: AddToFieldMenuProps) {
         }}
         className={
           justAdded
-            ? 'h-5 w-5 flex items-center justify-center rounded text-success'
-            : 'h-5 w-5 flex items-center justify-center rounded transition-colors text-text-muted/0 group-hover:text-text-muted hover:!text-text hover:bg-surface-raised'
+            ? 'h-5 w-5 flex items-center justify-center rounded-md bg-success text-white'
+            : 'h-5 w-5 flex items-center justify-center rounded-md bg-primary text-white hover:bg-primary-hover transition-all opacity-0 group-hover:opacity-100'
         }
         aria-label="Add suggestion to field"
         type="button"
