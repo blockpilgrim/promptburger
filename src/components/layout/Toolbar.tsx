@@ -5,9 +5,10 @@ import { useAppStore } from '../../store'
 
 interface ToolbarProps {
   onOpenSettings: () => void
+  onOpenHistory: () => void
 }
 
-export function Toolbar({ onOpenSettings }: ToolbarProps) {
+export function Toolbar({ onOpenSettings, onOpenHistory }: ToolbarProps) {
   const isDemoMode = useAppStore((s) => s.isDemoMode)
 
   return (
@@ -46,8 +47,8 @@ export function Toolbar({ onOpenSettings }: ToolbarProps) {
         <Button
           variant="ghost"
           size="sm"
-          disabled
-          title="History — coming soon"
+          onClick={onOpenHistory}
+          title="View prompt history"
           leftIcon={<History className="h-4 w-4" />}
         >
           <span className="hidden sm:inline">History</span>

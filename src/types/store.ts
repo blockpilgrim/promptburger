@@ -1,5 +1,36 @@
 import type { RoleOption } from './roles'
 
+// --- History Entry ---
+export interface HistoryEntry {
+  id: string
+  timestamp: number
+  title: string
+  sidebar: {
+    selectedRoles: RoleOption[]
+    context: string
+    taskBraindump: string
+    constraints: string
+    examples: string
+    blocks: SidebarBlock[]
+  }
+  canvas: {
+    content: string
+    suggestions: string
+  }
+}
+
+// --- History Slice ---
+export interface HistoryState {
+  history: HistoryEntry[]
+  isHistoryOpen: boolean
+
+  addHistoryEntry: (entry: Omit<HistoryEntry, 'id' | 'timestamp'>) => void
+  removeHistoryEntry: (id: string) => void
+  clearHistory: () => void
+  loadHistoryEntry: (id: string) => void
+  setHistoryOpen: (open: boolean) => void
+}
+
 // --- Sidebar Block ---
 export interface SidebarBlock {
   id: string
@@ -73,4 +104,4 @@ export interface UIState {
 }
 
 // --- Combined ---
-export type AppStore = SidebarState & CanvasState & SettingsState & UIState
+export type AppStore = SidebarState & CanvasState & SettingsState & UIState & HistoryState

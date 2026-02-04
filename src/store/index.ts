@@ -5,6 +5,7 @@ import { createSidebarSlice } from './sidebar-slice'
 import { createCanvasSlice } from './canvas-slice'
 import { createSettingsSlice } from './settings-slice'
 import { createUISlice } from './ui-slice'
+import { createHistorySlice } from './history-slice'
 
 export const useAppStore = create<AppStore>()(
   devtools(
@@ -14,6 +15,7 @@ export const useAppStore = create<AppStore>()(
         ...createCanvasSlice(...a),
         ...createSettingsSlice(...a),
         ...createUISlice(...a),
+        ...createHistorySlice(...a),
       }),
       {
         name: 'promptburger-store',
@@ -27,6 +29,7 @@ export const useAppStore = create<AppStore>()(
           apiKey: state.apiKey,
           selectedModel: state.selectedModel,
           isDemoMode: state.isDemoMode,
+          history: state.history,
         }),
       },
     ),
