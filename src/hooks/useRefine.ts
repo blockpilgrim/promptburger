@@ -36,11 +36,34 @@ export function useRefine() {
 
     const onComplete = (fullText: string) => {
       const s = useAppStore.getState()
-      s.setContent(extractPromptOnly(fullText))
-      s.setSuggestions(extractSuggestions(fullText))
+      const promptContent = extractPromptOnly(fullText)
+      const suggestionContent = extractSuggestions(fullText)
+
+      s.setContent(promptContent)
+      s.setSuggestions(suggestionContent)
       s.setIsEditable(true)
       s.setIsRefining(false)
       s.setStreamedContent('')
+
+      // Save to history (skip in demo mode)
+      if (!s.isDemoMode && promptContent) {
+        const title = s.taskBraindump.trim().slice(0, 100) || 'Untitled prompt'
+        s.addHistoryEntry({
+          title,
+          sidebar: {
+            selectedRoles: s.selectedRoles,
+            context: s.context,
+            taskBraindump: s.taskBraindump,
+            constraints: s.constraints,
+            examples: s.examples,
+            blocks: s.blocks,
+          },
+          canvas: {
+            content: promptContent,
+            suggestions: suggestionContent,
+          },
+        })
+      }
 
       if (s.isDemoMode) {
         const next = advanceDemoScenario()

@@ -15,6 +15,7 @@ import { CanvasEditor } from './components/canvas/CanvasEditor'
 import { CanvasEmptyState } from './components/canvas/CanvasEmptyState'
 import { SuggestionsPanel } from './components/canvas/SuggestionsPanel'
 import { SettingsModal } from './components/settings/SettingsModal'
+import { HistoryModal } from './components/history/HistoryModal'
 import { Toast } from './components/shared/Toast'
 import { useAppStore } from './store'
 import { useRefine } from './hooks/useRefine'
@@ -22,6 +23,7 @@ import { useClipboard } from './hooks/useClipboard'
 
 export default function App() {
   const toggleSettings = useAppStore((s) => s.toggleSettings)
+  const setHistoryOpen = useAppStore((s) => s.setHistoryOpen)
   const blocks = useAppStore((s) => s.blocks)
   const content = useAppStore((s) => s.content)
   const streamedContent = useAppStore((s) => s.streamedContent)
@@ -63,6 +65,7 @@ export default function App() {
     <>
       <AppShell
         onOpenSettings={toggleSettings}
+        onOpenHistory={() => setHistoryOpen(true)}
         sidebar={
           <Sidebar footer={<RefineButton onRefine={refine} />}>
             <RoleSelector />
@@ -100,6 +103,7 @@ export default function App() {
         }
       />
       <SettingsModal />
+      <HistoryModal />
       <Toast message={toastMessage} type={toastType} onDismiss={clearToast} />
     </>
   )
