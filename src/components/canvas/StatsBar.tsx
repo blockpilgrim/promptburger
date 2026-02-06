@@ -8,7 +8,7 @@ interface StatsBarProps {
 
 export function StatsBar({ stats }: StatsBarProps) {
   return (
-    <div className="flex items-center gap-4 border-b border-border bg-surface-alt px-6 py-1.5 text-xs text-text-muted">
+    <div className="flex items-center justify-end gap-4 px-6 py-1.5 text-xs text-text-muted">
       <span className="flex items-center gap-1" title="Input / Output tokens">
         <Activity className="h-3 w-3" />
         {formatTokens(stats.inputTokens)} in / {formatTokens(stats.outputTokens)} out

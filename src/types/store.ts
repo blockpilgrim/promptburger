@@ -27,6 +27,7 @@ export interface HistoryEntry {
     suggestions: string
   }
   stats?: RefinementStats
+  isIteration?: boolean
 }
 
 // --- History Slice ---

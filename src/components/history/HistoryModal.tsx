@@ -1,15 +1,42 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useAppStore } from '../../store'
 import { Modal } from '../shared/Modal'
 import { Button } from '../shared/Button'
 import { DiffModal } from '../diff/DiffModal'
-import { Trash2, Clock, ArrowUpRight, GitCompareArrows, Activity, DollarSign, Zap } from 'lucide-react'
+import { Trash2, Clock, ArrowUpRight, GitCompareArrows, Activity, DollarSign, Zap, RefreshCw } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { formatDate, formatTokens, formatCost, formatDuration } from '../../lib/format-utils'
+import type { HistoryEntry } from '../../types'
 
 function truncate(str: string, maxLen: number): string {
   if (str.length <= maxLen) return str
   return str.slice(0, maxLen).trim() + '...'
+}
+
+interface HistoryGroup {
+  entries: HistoryEntry[]
+}
+
+function groupHistory(history: HistoryEntry[]): HistoryGroup[] {
+  const groups: HistoryGroup[] = []
+  let currentGroup: HistoryEntry[] = []
+
+  // History is newest-first. Accumulate entries into a group.
+  // An original (non-iteration) is the root of its group — close the group when we hit one.
+  for (const entry of history) {
+    currentGroup.push(entry)
+    if (!entry.isIteration) {
+      groups.push({ entries: currentGroup })
+      currentGroup = []
+    }
+  }
+
+  // Leftover iterations without an original (edge case)
+  if (currentGroup.length > 0) {
+    groups.push({ entries: currentGroup })
+  }
+
+  return groups
 }
 
 export function HistoryModal() {
@@ -30,9 +57,103 @@ export function HistoryModal() {
   const cumulative = getCumulativeStats()
   const hasCumulativeStats = cumulative.count > 0
 
+  const groups = useMemo(() => groupHistory(history), [history])
+
   const selectedEntries = selectedForCompare
     .map((id) => history.find((e) => e.id === id))
     .filter(Boolean)
+
+  function renderEntry(entry: HistoryEntry, versionLabel?: string) {
+    const isSelected = selectedForCompare.includes(entry.id)
+    const isIter = entry.isIteration
+
+    return (
+      <div
+        key={entry.id}
+        className={cn(
+          'group flex items-start gap-3 rounded-lg border p-3 transition-colors',
+          isSelected
+            ? 'border-primary bg-primary/5'
+            : 'border-border bg-surface-alt hover:border-primary/50',
+          isIter && 'ml-4',
+        )}
+        onClick={isCompareMode ? () => toggleCompareSelection(entry.id) : undefined}
+        role={isCompareMode ? 'checkbox' : undefined}
+        aria-checked={isCompareMode ? isSelected : undefined}
+        style={isCompareMode ? { cursor: 'pointer' } : undefined}
+      >
+        {isCompareMode && (
+          <div className={cn(
+            'mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border',
+            isSelected ? 'border-primary bg-primary text-white' : 'border-border',
+          )}>
+            {isSelected && (
+              <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M2 6l3 3 5-5" />
+              </svg>
+            )}
+          </div>
+        )}
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-medium text-text">
+              {truncate(entry.title, 60)}
+            </p>
+            {versionLabel && (
+              <span className={cn(
+                'inline-flex shrink-0 items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-medium',
+                isIter
+                  ? 'bg-accent/15 text-accent-foreground'
+                  : 'bg-primary/10 text-primary',
+              )}>
+                {isIter && <RefreshCw className="h-2.5 w-2.5" />}
+                {versionLabel}
+              </span>
+            )}
+          </div>
+          <p className="mt-0.5 text-xs text-text-muted">
+            {formatDate(entry.timestamp)}
+          </p>
+          {entry.stats && (
+            <div className="mt-1 flex items-center gap-3 text-[10px] text-text-muted">
+              <span className="flex items-center gap-0.5">
+                <Activity className="h-2.5 w-2.5" />
+                {formatTokens(entry.stats.inputTokens + entry.stats.outputTokens)}
+              </span>
+              {entry.stats.cost != null && (
+                <span className="flex items-center gap-0.5">
+                  <DollarSign className="h-2.5 w-2.5" />
+                  {formatCost(entry.stats.cost)}
+                </span>
+              )}
+              <span className="flex items-center gap-0.5">
+                <Zap className="h-2.5 w-2.5" />
+                {formatDuration(entry.stats.durationMs)}
+              </span>
+            </div>
+          )}
+        </div>
+        {!isCompareMode && (
+          <div className="flex shrink-0 items-center gap-1">
+            <button
+              onClick={() => loadHistoryEntry(entry.id)}
+              className="rounded p-1.5 text-text-muted hover:bg-surface-raised hover:text-primary transition-colors"
+              title="Load this prompt"
+            >
+              <ArrowUpRight className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => removeHistoryEntry(entry.id)}
+              className="rounded p-1.5 text-text-muted hover:bg-surface-raised hover:text-red-500 transition-colors"
+              title="Delete from history"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </div>
+        )}
+      </div>
+    )
+  }
 
   return (
     <>
@@ -77,79 +198,24 @@ export function HistoryModal() {
                   )}
                 </div>
               )}
-              <div className="max-h-80 space-y-2 overflow-y-auto">
-                {history.map((entry) => {
-                  const isSelected = selectedForCompare.includes(entry.id)
+              <div className="max-h-80 space-y-1 overflow-y-auto">
+                {groups.map((group, gi) => {
+                  // Assign version numbers: entries are newest-first, so reverse for numbering
+                  const count = group.entries.length
+                  const showVersions = count > 1
+
                   return (
-                    <div
-                      key={entry.id}
-                      className={cn(
-                        'group flex items-start gap-3 rounded-lg border p-3 transition-colors',
-                        isSelected
-                          ? 'border-primary bg-primary/5'
-                          : 'border-border bg-surface-alt hover:border-primary/50',
+                    <div key={gi}>
+                      {gi > 0 && (
+                        <div className="my-2 border-t border-border/50" />
                       )}
-                      onClick={isCompareMode ? () => toggleCompareSelection(entry.id) : undefined}
-                      role={isCompareMode ? 'checkbox' : undefined}
-                      aria-checked={isCompareMode ? isSelected : undefined}
-                      style={isCompareMode ? { cursor: 'pointer' } : undefined}
-                    >
-                      {isCompareMode && (
-                        <div className={cn(
-                          'mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border',
-                          isSelected ? 'border-primary bg-primary text-white' : 'border-border',
-                        )}>
-                          {isSelected && (
-                            <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2">
-                              <path d="M2 6l3 3 5-5" />
-                            </svg>
-                          )}
-                        </div>
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium text-text">
-                          {truncate(entry.title, 60)}
-                        </p>
-                        <p className="mt-0.5 text-xs text-text-muted">
-                          {formatDate(entry.timestamp)}
-                        </p>
-                        {entry.stats && (
-                          <div className="mt-1 flex items-center gap-3 text-[10px] text-text-muted">
-                            <span className="flex items-center gap-0.5">
-                              <Activity className="h-2.5 w-2.5" />
-                              {formatTokens(entry.stats.inputTokens + entry.stats.outputTokens)}
-                            </span>
-                            {entry.stats.cost != null && (
-                              <span className="flex items-center gap-0.5">
-                                <DollarSign className="h-2.5 w-2.5" />
-                                {formatCost(entry.stats.cost)}
-                              </span>
-                            )}
-                            <span className="flex items-center gap-0.5">
-                              <Zap className="h-2.5 w-2.5" />
-                              {formatDuration(entry.stats.durationMs)}
-                            </span>
-                          </div>
-                        )}
+                      <div className="space-y-1">
+                        {group.entries.map((entry, ei) => {
+                          // newest first, so v1 is last in the array
+                          const version = showVersions ? `v${count - ei}` : undefined
+                          return renderEntry(entry, version)
+                        })}
                       </div>
-                      {!isCompareMode && (
-                        <div className="flex shrink-0 items-center gap-1">
-                          <button
-                            onClick={() => loadHistoryEntry(entry.id)}
-                            className="rounded p-1.5 text-text-muted hover:bg-surface-raised hover:text-primary transition-colors"
-                            title="Load this prompt"
-                          >
-                            <ArrowUpRight className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => removeHistoryEntry(entry.id)}
-                            className="rounded p-1.5 text-text-muted hover:bg-surface-raised hover:text-red-500 transition-colors"
-                            title="Delete from history"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </div>
-                      )}
                     </div>
                   )
                 })}
@@ -157,8 +223,8 @@ export function HistoryModal() {
 
               {hasCumulativeStats && (
                 <div className="rounded-lg border border-border bg-surface-alt px-3 py-2 text-xs text-text-muted">
-                  <span className="font-medium text-text">Total Usage</span>
-                  <span className="ml-1">({cumulative.count} prompts):</span>
+                  <span className="font-medium text-text">Total Tracked Usage</span>
+                  <span className="ml-1">({cumulative.count} of {history.length} prompts):</span>
                   <span className="ml-2">{formatTokens(cumulative.totalInputTokens + cumulative.totalOutputTokens)} tokens</span>
                   {cumulative.totalCost > 0 && (
                     <span className="ml-2">{formatCost(cumulative.totalCost)}</span>

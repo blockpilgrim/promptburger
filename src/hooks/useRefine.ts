@@ -25,6 +25,7 @@ export function useRefine() {
 
     const previousPrompt = state.content
     const previousSuggestions = state.suggestions
+    const isIteration = !!previousPrompt
 
     state.setIsRefining(true)
     state.setStreamedContent('')
@@ -71,6 +72,7 @@ export function useRefine() {
             suggestions: suggestionContent,
           },
           stats: statsWithCost,
+          isIteration,
         })
       }
 
