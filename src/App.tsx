@@ -14,6 +14,7 @@ import { CanvasToolbar } from './components/canvas/CanvasToolbar'
 import { CanvasEditor } from './components/canvas/CanvasEditor'
 import { CanvasEmptyState } from './components/canvas/CanvasEmptyState'
 import { SuggestionsPanel } from './components/canvas/SuggestionsPanel'
+import { StatsBar } from './components/canvas/StatsBar'
 import { SettingsModal } from './components/settings/SettingsModal'
 import { HistoryModal } from './components/history/HistoryModal'
 import { Toast } from './components/shared/Toast'
@@ -32,6 +33,7 @@ export default function App() {
   const toastMessage = useAppStore((s) => s.toastMessage)
   const toastType = useAppStore((s) => s.toastType)
   const clearToast = useAppStore((s) => s.clearToast)
+  const currentStats = useAppStore((s) => s.currentStats)
 
   const hasContent = !!(content || streamedContent)
 
@@ -87,6 +89,7 @@ export default function App() {
         canvas={
           <Canvas>
             <CanvasToolbar onReRefine={refine} />
+            {currentStats && !isRefining && <StatsBar stats={currentStats} />}
             {hasContent ? (
               <div className="flex flex-1 flex-col overflow-y-auto">
                 <div className="flex flex-1 flex-col p-6">

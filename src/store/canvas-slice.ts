@@ -7,11 +7,13 @@ export const createCanvasSlice: StateCreator<AppStore, [], [], CanvasState> = (s
   isEditable: false,
   isEditing: false,
   lastRefinedAt: null,
+  currentStats: null,
 
   setContent: (content) => set({ content }),
   setSuggestions: (suggestions) => set({ suggestions }),
   setIsEditable: (editable) => set({ isEditable: editable }),
   setIsEditing: (editing) => set({ isEditing: editing }),
+  setCurrentStats: (stats) => set({ currentStats: stats }),
 
   clearCanvas: () =>
     set({
@@ -20,5 +22,6 @@ export const createCanvasSlice: StateCreator<AppStore, [], [], CanvasState> = (s
       isEditable: false,
       isEditing: false,
       lastRefinedAt: null,
+      currentStats: null,
     }),
 })

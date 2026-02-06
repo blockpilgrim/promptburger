@@ -1,4 +1,4 @@
-import { Settings, FolderOpen, LayoutTemplate, History } from 'lucide-react'
+import { Settings, History } from 'lucide-react'
 import { Button } from '../shared/Button'
 import { BurgerIcon } from '../shared/BurgerIcon'
 import { useAppStore } from '../../store'
@@ -26,24 +26,6 @@ export function Toolbar({ onOpenSettings, onOpenHistory }: ToolbarProps) {
       </div>
 
       <div className="flex items-center gap-1">
-        <Button
-          variant="ghost"
-          size="sm"
-          disabled
-          title="Project Profiles — coming soon"
-          leftIcon={<FolderOpen className="h-4 w-4" />}
-        >
-          <span className="hidden sm:inline">Profiles</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          disabled
-          title="Templates — coming soon"
-          leftIcon={<LayoutTemplate className="h-4 w-4" />}
-        >
-          <span className="hidden sm:inline">Templates</span>
-        </Button>
         <Button
           variant="ghost"
           size="sm"
