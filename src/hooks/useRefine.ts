@@ -54,8 +54,8 @@ export function useRefine() {
       s.setStreamedContent('')
       s.setCurrentStats(statsWithCost)
 
-      // Save to history (skip in demo mode)
-      if (!s.isDemoMode && promptContent) {
+      // Save to history
+      if (promptContent) {
         const title = s.taskBraindump.trim().slice(0, 100) || 'Untitled prompt'
         s.addHistoryEntry({
           title,

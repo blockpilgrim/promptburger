@@ -1,6 +1,8 @@
 import { getDemoScenario } from '../constants/demo-responses'
 import type { RefinementStats } from '../types'
 
+const DEMO_MODEL = 'claude-sonnet-4-5-20250929'
+
 export async function simulateDemoStreaming(
   onChunk: (text: string) => void,
   onComplete: (fullText: string, stats: RefinementStats) => void,
@@ -8,7 +10,8 @@ export async function simulateDemoStreaming(
 ): Promise<void> {
   try {
     const startTime = Date.now()
-    const fullResponse = getDemoScenario().response
+    const scenario = getDemoScenario()
+    const fullResponse = scenario.response
     const chunks = chunkifyResponse(fullResponse)
 
     let accumulated = ''
@@ -20,16 +23,30 @@ export async function simulateDemoStreaming(
     }
 
     const durationMs = Date.now() - startTime
+    const outputTokens = estimateTokens(fullResponse)
+    const sidebarText = [
+      scenario.sidebar.context,
+      scenario.sidebar.task,
+      scenario.sidebar.constraints,
+      scenario.sidebar.examples,
+    ].join(' ')
+    const inputTokens = estimateTokens(sidebarText) + 500 // ~500 for system prompt overhead
+
     const stats: RefinementStats = {
-      inputTokens: 0,
-      outputTokens: 0,
+      inputTokens,
+      outputTokens,
       durationMs,
-      model: 'demo',
+      model: DEMO_MODEL,
     }
     onComplete(accumulated, stats)
   } catch (error) {
     onError(error instanceof Error ? error : new Error(String(error)))
   }
+}
+
+function estimateTokens(text: string): number {
+  const words = text.split(/\s+/).length
+  return Math.round(words * 1.3 + Math.random() * 20)
 }
 
 function chunkifyResponse(text: string): string[] {
