@@ -1,5 +1,5 @@
 import type { StateCreator } from 'zustand'
-import type { AppStore, HistoryState, HistoryEntry } from '../types'
+import type { AppStore, HistoryState, HistoryEntry, CumulativeStats } from '../types'
 
 const MAX_HISTORY_ENTRIES = 50
 
@@ -9,6 +9,8 @@ export const createHistorySlice: StateCreator<AppStore, [], [], HistoryState> = 
 ) => ({
   history: [],
   isHistoryOpen: false,
+  isCompareMode: false,
+  selectedForCompare: [],
 
   addHistoryEntry: (entry) =>
     set((state) => {
@@ -24,9 +26,10 @@ export const createHistorySlice: StateCreator<AppStore, [], [], HistoryState> = 
   removeHistoryEntry: (id) =>
     set((state) => ({
       history: state.history.filter((e) => e.id !== id),
+      selectedForCompare: state.selectedForCompare.filter((sid) => sid !== id),
     })),
 
-  clearHistory: () => set({ history: [] }),
+  clearHistory: () => set({ history: [], selectedForCompare: [], isCompareMode: false }),
 
   loadHistoryEntry: (id) => {
     const state = get()
@@ -48,9 +51,48 @@ export const createHistorySlice: StateCreator<AppStore, [], [], HistoryState> = 
     state.setSuggestions(entry.canvas.suggestions)
     state.setIsEditable(true)
 
+    // Restore stats if available
+    state.setCurrentStats(entry.stats ?? null)
+
     // Close history modal
-    set({ isHistoryOpen: false })
+    set({ isHistoryOpen: false, isCompareMode: false, selectedForCompare: [] })
   },
 
-  setHistoryOpen: (open) => set({ isHistoryOpen: open }),
+  setHistoryOpen: (open) => {
+    if (!open) {
+      set({ isHistoryOpen: false, isCompareMode: false, selectedForCompare: [] })
+    } else {
+      set({ isHistoryOpen: true })
+    }
+  },
+
+  getCumulativeStats: (): CumulativeStats => {
+    const { history } = get()
+    return history.reduce<CumulativeStats>(
+      (acc, entry) => {
+        if (!entry.stats) return acc
+        return {
+          totalInputTokens: acc.totalInputTokens + entry.stats.inputTokens,
+          totalOutputTokens: acc.totalOutputTokens + entry.stats.outputTokens,
+          totalCost: acc.totalCost + (entry.stats.cost ?? 0),
+          totalDurationMs: acc.totalDurationMs + entry.stats.durationMs,
+          count: acc.count + 1,
+        }
+      },
+      { totalInputTokens: 0, totalOutputTokens: 0, totalCost: 0, totalDurationMs: 0, count: 0 },
+    )
+  },
+
+  setCompareMode: (enabled) =>
+    set({ isCompareMode: enabled, selectedForCompare: [] }),
+
+  toggleCompareSelection: (id) =>
+    set((state) => {
+      const selected = state.selectedForCompare
+      if (selected.includes(id)) {
+        return { selectedForCompare: selected.filter((sid) => sid !== id) }
+      }
+      if (selected.length >= 2) return state
+      return { selectedForCompare: [...selected, id] }
+    }),
 })

@@ -1,5 +1,14 @@
 import type { RoleOption } from './roles'
 
+// --- Refinement Stats ---
+export interface RefinementStats {
+  inputTokens: number
+  outputTokens: number
+  durationMs: number
+  model: string
+  cost?: number
+}
+
 // --- History Entry ---
 export interface HistoryEntry {
   id: string
@@ -17,18 +26,33 @@ export interface HistoryEntry {
     content: string
     suggestions: string
   }
+  stats?: RefinementStats
+  isIteration?: boolean
 }
 
 // --- History Slice ---
+export interface CumulativeStats {
+  totalInputTokens: number
+  totalOutputTokens: number
+  totalCost: number
+  totalDurationMs: number
+  count: number
+}
+
 export interface HistoryState {
   history: HistoryEntry[]
   isHistoryOpen: boolean
+  isCompareMode: boolean
+  selectedForCompare: string[]
 
   addHistoryEntry: (entry: Omit<HistoryEntry, 'id' | 'timestamp'>) => void
   removeHistoryEntry: (id: string) => void
   clearHistory: () => void
   loadHistoryEntry: (id: string) => void
   setHistoryOpen: (open: boolean) => void
+  getCumulativeStats: () => CumulativeStats
+  setCompareMode: (enabled: boolean) => void
+  toggleCompareSelection: (id: string) => void
 }
 
 // --- Sidebar Block ---
@@ -67,11 +91,13 @@ export interface CanvasState {
   isEditable: boolean
   isEditing: boolean
   lastRefinedAt: number | null
+  currentStats: RefinementStats | null
 
   setContent: (content: string) => void
   setSuggestions: (suggestions: string) => void
   setIsEditable: (editable: boolean) => void
   setIsEditing: (editing: boolean) => void
+  setCurrentStats: (stats: RefinementStats | null) => void
   clearCanvas: () => void
 }
 

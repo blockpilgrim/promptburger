@@ -1,11 +1,13 @@
 import { getDemoScenario } from '../constants/demo-responses'
+import type { RefinementStats } from '../types'
 
 export async function simulateDemoStreaming(
   onChunk: (text: string) => void,
-  onComplete: (fullText: string) => void,
+  onComplete: (fullText: string, stats: RefinementStats) => void,
   onError: (error: Error) => void,
 ): Promise<void> {
   try {
+    const startTime = Date.now()
     const fullResponse = getDemoScenario().response
     const chunks = chunkifyResponse(fullResponse)
 
@@ -17,7 +19,14 @@ export async function simulateDemoStreaming(
       onChunk(chunk)
     }
 
-    onComplete(accumulated)
+    const durationMs = Date.now() - startTime
+    const stats: RefinementStats = {
+      inputTokens: 0,
+      outputTokens: 0,
+      durationMs,
+      model: 'demo',
+    }
+    onComplete(accumulated, stats)
   } catch (error) {
     onError(error instanceof Error ? error : new Error(String(error)))
   }

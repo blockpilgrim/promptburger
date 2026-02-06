@@ -6,6 +6,8 @@ import { streamRefinement } from '../services/anthropic'
 import { simulateDemoStreaming } from '../services/demo-streaming'
 import { advanceDemoScenario } from '../constants/demo-responses'
 import { extractPromptOnly, extractSuggestions } from '../lib/prompt-utils'
+import { calculateCost } from '../constants/pricing'
+import type { RefinementStats } from '../types'
 
 export function useRefine() {
   const refine = useCallback(() => {
@@ -23,27 +25,34 @@ export function useRefine() {
 
     const previousPrompt = state.content
     const previousSuggestions = state.suggestions
+    const isIteration = !!previousPrompt
 
     state.setIsRefining(true)
     state.setStreamedContent('')
     state.setContent('')
     state.setSuggestions('')
     state.setIsEditing(false)
+    state.setCurrentStats(null)
 
     const onChunk = (chunk: string) => {
       useAppStore.getState().appendStreamedContent(chunk)
     }
 
-    const onComplete = (fullText: string) => {
+    const onComplete = (fullText: string, stats: RefinementStats) => {
       const s = useAppStore.getState()
       const promptContent = extractPromptOnly(fullText)
       const suggestionContent = extractSuggestions(fullText)
+
+      // Calculate cost and attach to stats
+      const cost = calculateCost(stats.model, stats.inputTokens, stats.outputTokens)
+      const statsWithCost: RefinementStats = { ...stats, cost }
 
       s.setContent(promptContent)
       s.setSuggestions(suggestionContent)
       s.setIsEditable(true)
       s.setIsRefining(false)
       s.setStreamedContent('')
+      s.setCurrentStats(statsWithCost)
 
       // Save to history (skip in demo mode)
       if (!s.isDemoMode && promptContent) {
@@ -62,6 +71,8 @@ export function useRefine() {
             content: promptContent,
             suggestions: suggestionContent,
           },
+          stats: statsWithCost,
+          isIteration,
         })
       }
 
