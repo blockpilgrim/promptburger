@@ -1,4 +1,12 @@
 {
+  // compilerOptions here are NOT used by local builds (tsc -b uses the
+  // referenced projects below) — they exist for Vercel's api/ function
+  // compiler, which reads this file and must emit ESM because package.json
+  // sets "type": "module". Without this, functions crash at module load.
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
