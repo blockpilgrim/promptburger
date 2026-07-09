@@ -1,6 +1,6 @@
 import { createHash, timingSafeEqual } from 'node:crypto'
-import { getConfig, jsonResponse } from '../_lib/config'
-import { readStats } from '../_lib/usage'
+import { getConfig, jsonResponse } from '../_lib/config.js'
+import { readStats } from '../_lib/usage.js'
 
 function safeEqual(a: string, b: string): boolean {
   const hashA = createHash('sha256').update(a).digest()

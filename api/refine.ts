@@ -1,12 +1,12 @@
 import Anthropic from '@anthropic-ai/sdk'
-import { META_PROMPT } from '../src/constants/meta-prompt'
-import { AVAILABLE_MODELS } from '../src/constants/models'
-import { calculateCost } from '../src/constants/pricing'
-import type { RefineRequestBody, RefineStreamEvent } from '../src/types/api'
-import { getConfig, jsonResponse } from './_lib/config'
-import { getClientIp } from './_lib/ip'
-import { checkRateLimit } from './_lib/rate-limit'
-import { recordUsage } from './_lib/usage'
+import { META_PROMPT } from '../src/constants/meta-prompt.js'
+import { AVAILABLE_MODELS } from '../src/constants/models.js'
+import { calculateCost } from '../src/constants/pricing.js'
+import type { RefineRequestBody, RefineStreamEvent } from '../src/types/api.js'
+import { getConfig, jsonResponse } from './_lib/config.js'
+import { getClientIp } from './_lib/ip.js'
+import { checkRateLimit } from './_lib/rate-limit.js'
+import { recordUsage } from './_lib/usage.js'
 
 export const maxDuration = 60
 

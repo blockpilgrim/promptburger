@@ -1,6 +1,6 @@
-import { getConfig } from './config'
-import { hasRedis, redisPipeline } from './redis'
-import { dayBucket, hourBucket, secondsUntilNextHour, secondsUntilNextUtcDay } from './time'
+import { getConfig } from './config.js'
+import { hasRedis, redisPipeline } from './redis.js'
+import { dayBucket, hourBucket, secondsUntilNextHour, secondsUntilNextUtcDay } from './time.js'
 
 export interface RateLimitResult {
   allowed: boolean

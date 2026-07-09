@@ -1,7 +1,7 @@
-import type { AdminStats, DailyUsage, IpUsage, UsageEvent } from '../../src/types/api'
-import { getConfig } from './config'
-import { hasRedis, parseHash, redisPipeline, type RedisCommand } from './redis'
-import { dayBucket, recentDayBuckets } from './time'
+import type { AdminStats, DailyUsage, IpUsage, UsageEvent } from '../../src/types/api.js'
+import { getConfig } from './config.js'
+import { hasRedis, parseHash, redisPipeline, type RedisCommand } from './redis.js'
+import { dayBucket, recentDayBuckets } from './time.js'
 
 const EVENTS_KEY = 'pb:usage:events'
 const TOTALS_KEY = 'pb:usage:totals'
