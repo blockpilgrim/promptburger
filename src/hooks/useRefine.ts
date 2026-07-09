@@ -1,8 +1,7 @@
 import { useCallback } from 'react'
 import { useAppStore } from '../store'
-import { META_PROMPT } from '../constants/meta-prompt'
 import { assembleUserMessage } from '../services/prompt-assembler'
-import { streamRefinement } from '../services/anthropic'
+import { streamRefinement } from '../services/refine-api'
 import { simulateDemoStreaming } from '../services/demo-streaming'
 import { advanceDemoScenario } from '../constants/demo-responses'
 import { extractPromptOnly, extractSuggestions } from '../lib/prompt-utils'
@@ -12,11 +11,6 @@ import type { RefinementStats } from '../types'
 export function useRefine() {
   const refine = useCallback(() => {
     const state = useAppStore.getState()
-
-    if (!state.isDemoMode && !state.apiKey) {
-      state.showToast('Set your API key in Kitchen Settings first.', 'error')
-      return
-    }
 
     if (!state.taskBraindump.trim()) {
       state.showToast('Every burger needs a patty! Add a task description.', 'error')
@@ -88,7 +82,7 @@ export function useRefine() {
 
     const onError = (error: Error) => {
       const s = useAppStore.getState()
-      s.showToast(`Refinement failed: ${error.message}`, 'error')
+      s.showToast(error.message, 'error')
       s.setIsRefining(false)
       const streamed = s.streamedContent
       if (streamed) {
@@ -114,9 +108,7 @@ export function useRefine() {
       })
 
       streamRefinement(
-        state.apiKey,
         state.selectedModel,
-        META_PROMPT,
         userMessage,
         onChunk,
         onComplete,

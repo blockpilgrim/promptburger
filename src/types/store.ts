@@ -103,12 +103,10 @@ export interface CanvasState {
 
 // --- Settings Slice ---
 export interface SettingsState {
-  apiKey: string
   selectedModel: string
   isSettingsOpen: boolean
   isDemoMode: boolean
 
-  setApiKey: (key: string) => void
   setSelectedModel: (model: string) => void
   toggleSettings: () => void
   setSettingsOpen: (open: boolean) => void

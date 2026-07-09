@@ -26,7 +26,6 @@ export const useAppStore = create<AppStore>()(
           constraints: state.constraints,
           examples: state.examples,
           blocks: state.blocks,
-          apiKey: state.apiKey,
           selectedModel: state.selectedModel,
           isDemoMode: state.isDemoMode,
           history: state.history,

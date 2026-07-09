@@ -1,8 +1,10 @@
-import { StrictMode } from 'react'
+import { lazy, StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ErrorBoundary } from './components/shared/ErrorBoundary'
 import './index.css'
 import App from './App'
+
+const AdminPage = lazy(() => import('./admin/AdminPage'))
 
 // One-time migration: rename localStorage key from old brand
 const old = localStorage.getItem('promptcomposer-store')
@@ -11,10 +13,18 @@ if (old && !localStorage.getItem('promptburger-store')) {
   localStorage.removeItem('promptcomposer-store')
 }
 
+const isAdminRoute = window.location.pathname.replace(/\/+$/, '') === '/admin'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <App />
+      {isAdminRoute ? (
+        <Suspense fallback={null}>
+          <AdminPage />
+        </Suspense>
+      ) : (
+        <App />
+      )}
     </ErrorBoundary>
   </StrictMode>,
 )
