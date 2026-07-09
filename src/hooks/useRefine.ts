@@ -6,6 +6,7 @@ import { simulateDemoStreaming } from '../services/demo-streaming'
 import { advanceDemoScenario } from '../constants/demo-responses'
 import { extractPromptOnly, extractSuggestions } from '../lib/prompt-utils'
 import { calculateCost } from '../constants/pricing'
+import { DEFAULT_MODEL } from '../constants/models'
 import type { RefinementStats } from '../types'
 
 export function useRefine() {
@@ -108,7 +109,7 @@ export function useRefine() {
       })
 
       streamRefinement(
-        state.selectedModel,
+        DEFAULT_MODEL,
         userMessage,
         onChunk,
         onComplete,

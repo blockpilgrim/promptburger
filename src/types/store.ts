@@ -103,11 +103,9 @@ export interface CanvasState {
 
 // --- Settings Slice ---
 export interface SettingsState {
-  selectedModel: string
   isSettingsOpen: boolean
   isDemoMode: boolean
 
-  setSelectedModel: (model: string) => void
   toggleSettings: () => void
   setSettingsOpen: (open: boolean) => void
   setDemoMode: (enabled: boolean) => void

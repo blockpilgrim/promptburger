@@ -1,4 +1,6 @@
+// Older models are kept so historical usage events still get costs.
 export const MODEL_PRICING: Record<string, { inputPerMillion: number; outputPerMillion: number }> = {
+  'claude-sonnet-5': { inputPerMillion: 3, outputPerMillion: 15 },
   'claude-sonnet-4-5-20250929': { inputPerMillion: 3, outputPerMillion: 15 },
   'claude-haiku-4-5-20251001': { inputPerMillion: 0.8, outputPerMillion: 4 },
   'claude-opus-4-6': { inputPerMillion: 15, outputPerMillion: 75 },

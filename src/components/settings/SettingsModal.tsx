@@ -2,7 +2,6 @@ import { useAppStore } from '../../store'
 import { cn } from '../../lib/cn'
 import { Modal } from '../shared/Modal'
 import { Button } from '../shared/Button'
-import { ModelSelector } from './ModelSelector'
 import { Play } from 'lucide-react'
 import { getDemoScenario, resetDemoIndex } from '../../constants/demo-responses'
 
@@ -70,10 +69,9 @@ export function SettingsModal() {
           </button>
         </div>
 
-        <ModelSelector />
-
         <p className="text-xs text-text-muted/70">
-          PromptBurger is powered by Claude — no API key or account needed. To
+          PromptBurger is powered by Claude Sonnet 5 — no API key or account
+          needed. To
           keep the grill running for everyone, usage is limited to a handful of
           prompts per hour.
         </p>
