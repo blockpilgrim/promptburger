@@ -21,6 +21,14 @@ export function useRefine() {
     const previousPrompt = state.content
     const previousSuggestions = state.suggestions
     const isIteration = !!previousPrompt
+    // Answers only make sense alongside the generation whose notes they
+    // answer — never send them with a from-scratch request.
+    const noteResponses = isIteration
+      ? Object.entries(state.noteResponses)
+          .map(([note, response]) => ({ note: note.trim(), response: response.trim() }))
+          .filter((r) => r.note && r.response)
+      : []
+    const dismissedNotes = isIteration ? state.dismissedNotes : []
 
     state.setIsRefining(true)
     state.setStreamedContent('')
@@ -68,8 +76,13 @@ export function useRefine() {
           },
           stats: statsWithCost,
           isIteration,
+          noteResponses: noteResponses.length > 0 ? noteResponses : undefined,
         })
       }
+
+      // The answers are baked into the new generation; a fresh set of
+      // notes deserves a clean slate. (Kept on error so a retry re-sends.)
+      s.clearNoteResponses()
 
       if (s.isDemoMode) {
         const next = advanceDemoScenario()
@@ -106,6 +119,8 @@ export function useRefine() {
         blocks: state.blocks,
         previousPrompt,
         previousSuggestions,
+        noteResponses,
+        dismissedNotes,
       })
 
       streamRefinement(

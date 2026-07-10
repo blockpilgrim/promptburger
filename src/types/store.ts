@@ -9,6 +9,12 @@ export interface RefinementStats {
   cost?: number
 }
 
+// --- Chef's Notes Q&A ---
+export interface NoteResponse {
+  note: string
+  response: string
+}
+
 // --- History Entry ---
 export interface HistoryEntry {
   id: string
@@ -28,6 +34,9 @@ export interface HistoryEntry {
   }
   stats?: RefinementStats
   isIteration?: boolean
+  // Answers the user gave to the previous generation's Chef's Notes,
+  // i.e. part of the input that produced this entry.
+  noteResponses?: NoteResponse[]
 }
 
 // --- History Slice ---
@@ -92,12 +101,19 @@ export interface CanvasState {
   isEditing: boolean
   lastRefinedAt: number | null
   currentStats: RefinementStats | null
+  // Keyed by the note's plain text. Both maps reset with each generation.
+  noteResponses: Record<string, string>
+  dismissedNotes: string[]
 
   setContent: (content: string) => void
   setSuggestions: (suggestions: string) => void
   setIsEditable: (editable: boolean) => void
   setIsEditing: (editing: boolean) => void
   setCurrentStats: (stats: RefinementStats | null) => void
+  setNoteResponse: (note: string, response: string) => void
+  dismissNote: (note: string) => void
+  undismissNote: (note: string) => void
+  clearNoteResponses: () => void
   clearCanvas: () => void
 }
 
