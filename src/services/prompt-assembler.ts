@@ -1,4 +1,4 @@
-import type { RoleOption, SidebarBlock } from '../types'
+import type { NoteResponse, RoleOption, SidebarBlock } from '../types'
 
 interface AssemblerInput {
   selectedRoles: RoleOption[]
@@ -9,6 +9,8 @@ interface AssemblerInput {
   blocks: SidebarBlock[]
   previousPrompt?: string
   previousSuggestions?: string
+  noteResponses?: NoteResponse[]
+  dismissedNotes?: string[]
 }
 
 export function assembleUserMessage(input: AssemblerInput): string {
@@ -47,6 +49,25 @@ export function assembleUserMessage(input: AssemblerInput): string {
       prevParts.push(`**Previous Suggestions:**\n${input.previousSuggestions.trim()}`)
     }
     parts.push(`---\n\n**Previous Generation (for iteration):**\n\n${prevParts.join('\n\n')}`)
+  }
+
+  const answered = (input.noteResponses ?? []).filter(
+    (r) => r.note.trim() && r.response.trim(),
+  )
+  if (answered.length > 0) {
+    const qaPairs = answered
+      .map((r) => `Q: ${r.note.trim()}\nA: ${r.response.trim()}`)
+      .join('\n\n')
+    parts.push(`**Responses to Chef's Notes:**\n\n${qaPairs}`)
+  }
+
+  const dismissed = (input.dismissedNotes ?? []).map((n) => n.trim()).filter(Boolean)
+  if (dismissed.length > 0) {
+    parts.push(
+      `**Dismissed Chef's Notes (the user marked these as not relevant):**\n${dismissed
+        .map((n) => `- ${n}`)
+        .join('\n')}`,
+    )
   }
 
   return parts.join('\n\n')

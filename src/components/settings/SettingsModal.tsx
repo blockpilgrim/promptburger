@@ -22,14 +22,12 @@ export function SettingsModal() {
       store.setTaskBraindump(scenario.sidebar.task)
       store.setConstraints(scenario.sidebar.constraints)
       store.setExamples(scenario.sidebar.examples)
-      store.setContent('')
-      store.setSuggestions('')
+      store.clearCanvas()
       store.setDemoMode(true)
     } else {
       store.setDemoMode(false)
       store.clearAll()
-      store.setContent('')
-      store.setSuggestions('')
+      store.clearCanvas()
     }
   }
 
