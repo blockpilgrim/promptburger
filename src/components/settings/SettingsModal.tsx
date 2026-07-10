@@ -4,6 +4,7 @@ import { Modal } from '../shared/Modal'
 import { Button } from '../shared/Button'
 import { Play } from 'lucide-react'
 import { getDemoScenario, resetDemoIndex } from '../../constants/demo-responses'
+import { BUY_ME_A_COFFEE_URL } from '../../constants/links'
 
 export function SettingsModal() {
   const isOpen = useAppStore((s) => s.isSettingsOpen)
@@ -72,6 +73,19 @@ export function SettingsModal() {
           needed. To
           keep the grill running for everyone, usage is limited to a handful of
           prompts per hour.
+        </p>
+
+        <p className="text-xs text-text-muted/70">
+          Enjoying this?{' '}
+          <a
+            href={BUY_ME_A_COFFEE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline hover:text-primary-hover"
+          >
+            Buy me a coffee
+          </a>
+          .
         </p>
       </div>
       <div className="mt-6 flex justify-end">

@@ -128,16 +128,25 @@ export interface SettingsState {
 }
 
 // --- UI Slice ---
+// Optional secondary action a toast can carry. 'coffee' surfaces the
+// Buy Me a Coffee link on the copy-success toast; other toasts stay clean.
+export type ToastAction = 'coffee'
+
 export interface UIState {
   isRefining: boolean
   streamedContent: string
   toastMessage: string | null
   toastType: 'success' | 'error' | null
+  toastAction: ToastAction | null
 
   setIsRefining: (refining: boolean) => void
   setStreamedContent: (content: string) => void
   appendStreamedContent: (chunk: string) => void
-  showToast: (message: string, type: 'success' | 'error') => void
+  showToast: (
+    message: string,
+    type: 'success' | 'error',
+    options?: { action?: ToastAction },
+  ) => void
   clearToast: () => void
 }
 

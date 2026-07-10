@@ -6,15 +6,16 @@ export const createUISlice: StateCreator<AppStore, [], [], UIState> = (set) => (
   streamedContent: '',
   toastMessage: null,
   toastType: null,
+  toastAction: null,
 
   setIsRefining: (refining) => set({ isRefining: refining }),
   setStreamedContent: (content) => set({ streamedContent: content }),
   appendStreamedContent: (chunk) =>
     set((s) => ({ streamedContent: s.streamedContent + chunk })),
 
-  showToast: (message, type) => {
-    set({ toastMessage: message, toastType: type })
+  showToast: (message, type, options) => {
+    set({ toastMessage: message, toastType: type, toastAction: options?.action ?? null })
   },
 
-  clearToast: () => set({ toastMessage: null, toastType: null }),
+  clearToast: () => set({ toastMessage: null, toastType: null, toastAction: null }),
 })

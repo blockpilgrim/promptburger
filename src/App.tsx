@@ -32,6 +32,7 @@ export default function App() {
   const isRefining = useAppStore((s) => s.isRefining)
   const toastMessage = useAppStore((s) => s.toastMessage)
   const toastType = useAppStore((s) => s.toastType)
+  const toastAction = useAppStore((s) => s.toastAction)
   const clearToast = useAppStore((s) => s.clearToast)
   const currentStats = useAppStore((s) => s.currentStats)
 
@@ -107,7 +108,12 @@ export default function App() {
       />
       <SettingsModal />
       <HistoryModal />
-      <Toast message={toastMessage} type={toastType} onDismiss={clearToast} />
+      <Toast
+        message={toastMessage}
+        type={toastType}
+        action={toastAction}
+        onDismiss={clearToast}
+      />
     </>
   )
 }
