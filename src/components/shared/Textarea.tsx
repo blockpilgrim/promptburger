@@ -1,12 +1,16 @@
-import { type TextareaHTMLAttributes } from 'react'
+import { type ReactNode, type TextareaHTMLAttributes } from 'react'
 import { cn } from '../../lib/cn'
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string
+  labelClassName?: string
+  labelAccessory?: ReactNode
 }
 
 export function Textarea({
   label,
+  labelClassName,
+  labelAccessory,
   id,
   className,
   ...props
@@ -15,12 +19,15 @@ export function Textarea({
 
   return (
     <div>
-      <label
-        htmlFor={inputId}
-        className="mb-1.5 block text-sm font-medium text-text-muted"
-      >
-        {label}
-      </label>
+      <div className="mb-1.5 flex items-center justify-between gap-2">
+        <label
+          htmlFor={inputId}
+          className={cn('block text-sm font-medium text-text-muted', labelClassName)}
+        >
+          {label}
+        </label>
+        {labelAccessory}
+      </div>
       <textarea
         id={inputId}
         className={cn(
