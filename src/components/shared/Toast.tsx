@@ -48,7 +48,7 @@ export function Toast({ message, type, action, onDismiss }: ToastProps) {
       ) : (
         <X className="h-4 w-4 shrink-0" />
       )}
-      <div className="flex flex-col gap-0.5">
+      <div className="flex flex-col gap-1">
         {/* Keep the copy confirmation on a single line. */}
         <span className={cn(type === 'success' && 'whitespace-nowrap')}>
           {message}
@@ -58,7 +58,7 @@ export function Toast({ message, type, action, onDismiss }: ToastProps) {
             href={BUY_ME_A_COFFEE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 self-start whitespace-nowrap rounded-sm text-[0.8rem] text-white/80 transition-colors hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+            className="inline-flex items-center gap-1.5 self-start whitespace-nowrap rounded-sm text-xs font-normal text-white/80 transition-colors hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           >
             <Coffee className="h-3.5 w-3.5 shrink-0" />
             <span>
