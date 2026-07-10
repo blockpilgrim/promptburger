@@ -11,6 +11,7 @@ export async function streamRefinement(
   onChunk: (text: string) => void,
   onComplete: (fullText: string, stats: RefinementStats) => void,
   onError: (error: Error) => void,
+  onThinking?: () => void,
 ): Promise<void> {
   try {
     const body: RefineRequestBody = { model, userMessage }
@@ -51,7 +52,9 @@ export async function streamRefinement(
       } catch {
         return
       }
-      if (event.type === 'text') {
+      if (event.type === 'status') {
+        if (event.phase === 'thinking') onThinking?.()
+      } else if (event.type === 'text') {
         accumulated += event.text
         onChunk(event.text)
       } else if (event.type === 'done') {

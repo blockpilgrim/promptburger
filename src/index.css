@@ -90,6 +90,51 @@ body {
   animation: zoom-in-95 0.2s ease-out;
 }
 
+/* Grilling indicator: steam rising off the burger while the model thinks */
+@keyframes steam-rise {
+  0% {
+    transform: translateY(3px) scale(1);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(-10px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes burger-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.steam-wisp {
+  width: 3px;
+  height: 10px;
+  border-radius: 9999px;
+  background-color: var(--color-text-muted);
+  opacity: 0; /* invisible unless the animation is driving it */
+  animation: steam-rise 1.8s ease-out infinite;
+}
+
+.burger-bob {
+  animation: burger-bob 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .steam-wisp,
+  .burger-bob {
+    animation: none;
+  }
+}
+
 /* Select dropdown overrides */
 select option {
   background-color: var(--color-surface-alt);

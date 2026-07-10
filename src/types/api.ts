@@ -9,6 +9,7 @@ export interface RefineRequestBody {
 
 /** NDJSON events streamed back from /api/refine, one JSON object per line. */
 export type RefineStreamEvent =
+  | { type: 'status'; phase: 'thinking' }
   | { type: 'text'; text: string }
   | { type: 'done'; stats: RefinementStats }
   | { type: 'error'; message: string }
