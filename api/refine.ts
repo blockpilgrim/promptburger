@@ -76,6 +76,21 @@ export async function POST(request: Request): Promise<Response> {
           messages: [{ role: 'user', content: userMessage }],
         })
 
+        // Adaptive thinking streams blocks with empty text, so without this
+        // signal the client sees nothing until the first visible token.
+        let thinkingSignalled = false
+        messageStream.on('streamEvent', (event) => {
+          if (
+            !thinkingSignalled &&
+            event.type === 'content_block_start' &&
+            (event.content_block.type === 'thinking' ||
+              event.content_block.type === 'redacted_thinking')
+          ) {
+            thinkingSignalled = true
+            controller.enqueue(encodeEvent({ type: 'status', phase: 'thinking' }))
+          }
+        })
+
         messageStream.on('text', (text) => {
           controller.enqueue(encodeEvent({ type: 'text', text }))
         })

@@ -13,6 +13,7 @@ import { SidebarBlock } from './components/sidebar/SidebarBlock'
 import { CanvasToolbar } from './components/canvas/CanvasToolbar'
 import { CanvasEditor } from './components/canvas/CanvasEditor'
 import { CanvasEmptyState } from './components/canvas/CanvasEmptyState'
+import { GrillingIndicator } from './components/canvas/GrillingIndicator'
 import { SuggestionsPanel } from './components/canvas/SuggestionsPanel'
 import { StatsBar } from './components/canvas/StatsBar'
 import { SettingsModal } from './components/settings/SettingsModal'
@@ -100,6 +101,8 @@ export default function App() {
                   <SuggestionsPanel key={suggestions} suggestions={suggestions} onRefine={refine} />
                 )}
               </div>
+            ) : isRefining ? (
+              <GrillingIndicator />
             ) : (
               <CanvasEmptyState />
             )}

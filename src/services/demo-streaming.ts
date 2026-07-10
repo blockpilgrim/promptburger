@@ -8,12 +8,17 @@ export async function simulateDemoStreaming(
   onComplete: (fullText: string, stats: RefinementStats) => void,
   onError: (error: Error) => void,
   isIteration: boolean,
+  onThinking?: () => void,
 ): Promise<void> {
   try {
     const startTime = Date.now()
     const scenario = getDemoScenario()
     const fullResponse = isIteration ? scenario.iteration : scenario.response
     const chunks = chunkifyResponse(fullResponse)
+
+    // Mirror the real API's thinking phase so the demo exercises the same UI.
+    onThinking?.()
+    await delay(900 + Math.random() * 600)
 
     let accumulated = ''
 

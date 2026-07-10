@@ -31,14 +31,21 @@ export function useRefine() {
     const dismissedNotes = isIteration ? state.dismissedNotes : []
 
     state.setIsRefining(true)
+    state.setIsThinking(false)
     state.setStreamedContent('')
     state.setContent('')
     state.setSuggestions('')
     state.setIsEditing(false)
     state.setCurrentStats(null)
 
+    const onThinking = () => {
+      useAppStore.getState().setIsThinking(true)
+    }
+
     const onChunk = (chunk: string) => {
-      useAppStore.getState().appendStreamedContent(chunk)
+      const s = useAppStore.getState()
+      if (s.isThinking) s.setIsThinking(false)
+      s.appendStreamedContent(chunk)
     }
 
     const onComplete = (fullText: string, stats: RefinementStats) => {
@@ -54,6 +61,7 @@ export function useRefine() {
       s.setSuggestions(suggestionContent)
       s.setIsEditable(true)
       s.setIsRefining(false)
+      s.setIsThinking(false)
       s.setStreamedContent('')
       s.setCurrentStats(statsWithCost)
 
@@ -89,6 +97,7 @@ export function useRefine() {
       const s = useAppStore.getState()
       s.showToast(error.message, 'error')
       s.setIsRefining(false)
+      s.setIsThinking(false)
       const streamed = s.streamedContent
       if (streamed) {
         s.setContent(extractPromptOnly(streamed))
@@ -111,7 +120,7 @@ export function useRefine() {
         state.setConstraints(next.sidebar.constraints)
         state.setExamples(next.sidebar.examples)
       }
-      simulateDemoStreaming(onChunk, onComplete, onError, isDemoIteration)
+      simulateDemoStreaming(onChunk, onComplete, onError, isDemoIteration, onThinking)
     } else {
       const userMessage = assembleUserMessage({
         selectedRoles: state.selectedRoles,
@@ -132,6 +141,7 @@ export function useRefine() {
         onChunk,
         onComplete,
         onError,
+        onThinking,
       )
     }
   }, [])

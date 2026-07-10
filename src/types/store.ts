@@ -134,12 +134,16 @@ export type ToastAction = 'coffee'
 
 export interface UIState {
   isRefining: boolean
+  // True while the model is in its thinking phase — after the request starts
+  // but before any visible text streams back.
+  isThinking: boolean
   streamedContent: string
   toastMessage: string | null
   toastType: 'success' | 'error' | null
   toastAction: ToastAction | null
 
   setIsRefining: (refining: boolean) => void
+  setIsThinking: (thinking: boolean) => void
   setStreamedContent: (content: string) => void
   appendStreamedContent: (chunk: string) => void
   showToast: (
