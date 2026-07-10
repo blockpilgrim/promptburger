@@ -12,7 +12,7 @@ import {
   X,
 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
-import { AddToFieldMenu } from './AddToFieldMenu'
+import type { Components } from 'react-markdown'
 import { Button } from '../shared/Button'
 import { useAppStore } from '../../store'
 
@@ -105,7 +105,6 @@ function SuggestionItem({ children }: { children?: ReactNode }) {
                   Respond
                 </button>
               )}
-              <AddToFieldMenu getText={() => noteText} />
               <button
                 type="button"
                 onClick={() => {
@@ -141,6 +140,19 @@ function SuggestionItem({ children }: { children?: ReactNode }) {
       )}
     </li>
   )
+}
+
+// Module-scope so the component identities are stable across renders.
+// Inline overrides get a new function identity every render, which makes
+// React remount the whole markdown tree — wiping focus and local state
+// from any answer box the user is typing in.
+const markdownComponents: Components = {
+  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+  ul: ({ children }) => <ul className="space-y-2.5">{children}</ul>,
+  li: SuggestionItem,
+  strong: ({ children }) => (
+    <strong className="font-medium text-text-muted">{children}</strong>
+  ),
 }
 
 interface SuggestionsPanelProps {
@@ -210,18 +222,7 @@ export function SuggestionsPanel({ suggestions, onRefine }: SuggestionsPanelProp
             inert={!expanded ? true : undefined}
             aria-hidden={!expanded}
           >
-            <ReactMarkdown
-              components={{
-                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                ul: ({ children }) => <ul className="space-y-2.5">{children}</ul>,
-                li: SuggestionItem,
-                strong: ({ children }) => (
-                  <strong className="font-medium text-text-muted">{children}</strong>
-                ),
-              }}
-            >
-              {body}
-            </ReactMarkdown>
+            <ReactMarkdown components={markdownComponents}>{body}</ReactMarkdown>
 
             {answeredCount > 0 && (
               <div className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-accent/40 bg-accent/10 px-3.5 py-2.5">
