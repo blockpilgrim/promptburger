@@ -32,6 +32,8 @@ Follow these principles:
    - Address relevant suggestions from the previous generation that the user's input changes may have implicitly answered
    - Do NOT simply repeat the previous output — actively improve it based on any changes in the inputs
    - Generate new suggestions that address remaining gaps rather than repeating ones the user has already addressed
+   - If a "Responses to Chef's Notes" section is present, each Q/A pair is the user's direct answer to one of the previous generation's suggestions. Treat each answer as authoritative input: work it into the prompt wherever it fits best (context, constraints, tone, format — your call), and never re-ask a question that has been answered
+   - If a "Dismissed Chef's Notes" section is present, the user judged those suggestions not relevant to their goal. Do not raise them again in any form
 
 10. CONCISENESS: Remove redundancy and filler. Every sentence should earn its place. A shorter, clearer prompt outperforms a longer, vaguer one.
 

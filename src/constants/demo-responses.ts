@@ -9,6 +9,7 @@ export interface DemoScenario {
     examples: string;
   };
   response: string;
+  iteration: string;
 }
 
 const DEMO_SCENARIOS: DemoScenario[] = [
@@ -61,6 +62,56 @@ Rewrite the hero section and three value proposition blocks for a lightweight pr
 - **Social proof**: Consider whether the hero section should include a trust signal (user count, notable client, star rating). These significantly impact conversion even when copy is strong.
 - **Below-the-fold context**: What comes after the value props? Knowing the full page structure helps ensure the hero doesn't try to do too much.
 - **Mobile reading**: At 150 words across 4 blocks, each block is ~35 words. That's tight — make sure the constraint allows enough room to say something meaningful in each block.`,
+    iteration: `Act as an expert copywriter specializing in conversion-focused SaaS landing pages.
+
+## Objective
+
+Rewrite the hero section and three value proposition blocks for a lightweight, opinionated project management tool built specifically for small creative teams — committed to the single primary audience identified for this relaunch rather than speaking to the whole freelancer-to-agency range at once.
+
+## Positioning
+
+- Lead with one sharp differentiator: this tool is deliberately lightweight and opinionated — the antidote to bloated all-in-one suites like Notion and Asana
+- The hero must make that primary audience feel "this was built for us" within the first line
+- Reserve room for a single trust signal in the hero (user count or a recognizable client) — the copy should hold up with or without it
+
+## Requirements
+
+- Hero copy communicates what the tool does and who it's for in the opening line
+- Each value prop block leads with a benefit and names the specific pain it removes for that audience
+- Total word count across hero + 3 value prop blocks: under 150 words
+- CTA text is "Start free" (not "Sign up" or "Get started")
+- Copy must stand on its own without supporting images or illustrations
+
+## Page Structure
+
+- Hero: headline, subhead, CTA, optional trust signal
+- Three value prop blocks, strongest benefit first
+- Copy should set up — not duplicate — the feature detail that follows below the fold
+
+## Tone
+
+- Human, direct, punchy — a person talking, not a brand committee
+- No corporate buzzwords: "synergy," "leverage," "streamline," "seamless," "empower," "unlock" are all off limits
+- Aspirational but grounded — closer to Basecamp and Linear than enterprise SaaS
+
+## Reference Points
+
+**Match this feel:**
+- "The all-in-one toolkit for working remotely" (Basecamp)
+- "Built for the way modern software teams work" (Linear)
+
+**Avoid this feel:**
+- "Unlock the power of seamless collaboration with our industry-leading platform"
+
+---
+
+## Suggestions for Improvement
+
+- **Headline variants**: Want two or three hero headline options to A/B test, or a single committed line? Testing a "built for your kind of team" angle against a "less tool, more work" angle usually surfaces a clear winner.
+- **Objection handling**: The biggest hesitation for a team already on another tool is migration effort. A short reassurance — "bring your projects over in an afternoon" — can lift conversion more than another benefit.
+- **CTA subtext**: A line under "Start free" — "No credit card, no sales call" — removes the last bit of friction. Worth including?
+- **Voice consistency**: Decide between "you" (speaking to the team) and "we" (the product's point of view), then hold it across all four blocks — mixing the two is the most common thing that makes punchy copy feel off.
+- **Proof specificity**: If a trust signal is used, a concrete number ("trusted by 4,000 studios") outperforms a vague claim ("loved by teams everywhere"). Which real proof point is available?`,
   },
   {
     sidebar: {
@@ -115,6 +166,48 @@ Previous quarter's opening that resonated with leadership:
 - **Peer context**: If activation dipped across multiple teams or the whole platform, mentioning that reframes the miss without sounding like an excuse.
 - **Impact sizing**: For the "what we're changing" section, include expected impact estimates so leadership can judge whether the plan is sized to close the gap.
 - **Audience priorities**: Does this leadership group care more about the absolute number or the rate of improvement? That changes which data to lead with.`,
+    iteration: `Act as an expert editor specializing in concise executive communication.
+
+## Objective
+
+Draft a one-page quarterly update for a 6-person growth engineering team. Activation finished below target this quarter, so the update should lead with the real trajectory, own the gap, and show a sized plan to close it. It will be read by senior leadership alongside roughly 20 other updates.
+
+## Requirements
+
+- Open with the headline metric as a trajectory — current result, prior-quarter baseline, and target on one line — so the trajectory reads before the miss
+- Attribute the shipped wins and the activation gap to specific projects, separating an execution problem from an over-ambitious target
+- Use [placeholder] brackets for specific numbers to be filled in later
+- Close with a "What we're changing" section of exactly 3 bullets, each carrying an expected-impact estimate sized against the remaining gap
+
+## Tone
+
+- Honest and confident — own the miss without defensiveness or excuses
+- Factual over narrative — let the numbers carry the weight
+- Skimmable in under 60 seconds
+
+## Format
+
+- Bullet-heavy, one page maximum
+- Structure:
+  - **Headline trend** — activation now vs. last quarter vs. target, one line
+  - **What shipped** — deliverables with measured impact
+  - **What missed and why** — the gap, its likely cause, and what it isn't
+  - **What we're changing** — 3 actions, each sized with an expected impact
+
+## Reference
+
+Previous quarter's opening that resonated with leadership:
+"Activation hit 38% (target: 35%). Three experiments drove the lift — onboarding checklist (+4pp), simplified pricing page (+2pp), email sequence rewrite (+1.5pp)."
+
+---
+
+## Suggestions for Improvement
+
+- **Named owners**: Should each "what we're changing" bullet carry a DRI? Leadership tends to trust a plan more when accountability is visible.
+- **Risks and dependencies**: Is there a blocker — a platform dependency, a hiring gap, an upstream team — that could derail the plan? Naming it now reads as candor, not excuse-making.
+- **The ask**: Does this update need a decision or resource request from leadership, or is it purely informational? If there's an ask, it deserves its own line rather than being buried in the plan.
+- **Confidence tags**: Consider tagging each impact estimate with a confidence level (high/medium/low) so leadership can weigh the plan realistically instead of reading every number as a promise.
+- **Visual anchor**: A single inline trend indicator for activation across the last three or four quarters can land the trajectory faster than a sentence. Is a small visual welcome here, or is the format strictly text?`,
   },
   {
     sidebar: {
@@ -178,6 +271,51 @@ A structure that previously worked well with this team:
 - **Energy read**: Consider opening with a quick one-word check-in (not an icebreaker — just a read on the room). Lets you calibrate pacing and tone in real time.
 - **Follow-up ownership**: 90 minutes likely won't fully spec the top ideas. Build in a 5-minute close where you assign owners to flesh out the top 3 by a specific date.
 - **Psychological safety**: Teams recovering from a killed project often self-censor toward safe ideas. The facilitator should explicitly name that bold ideas are welcome — otherwise the output will skew conservative.`,
+    iteration: `Act as an expert workshop facilitator with experience running product ideation sessions for cross-functional teams.
+
+## Objective
+
+Design a 90-minute brainstorming workshop for a 12-person product team (designers, engineers, PMs) to generate and prioritize ideas for the next quarter's roadmap. Scope ideas to a single framing question so the output is comparable and actionable, and re-energize a team whose last project was cancelled — without dwelling on it.
+
+## Requirements
+
+- Total duration: exactly 90 minutes, with time allocated to each section and a small buffer for overruns
+- Anchor the session to one framing question or problem area so ideas can be compared head-to-head during prioritization
+- Produce a ranked shortlist the team can act on immediately, with an owner assigned to flesh out each of the top three
+- Give equal voice to introverts and extroverts — silent individual work before any open discussion
+- Standard conference room only: whiteboard, sticky notes, markers. No special tools or software
+
+## Facilitation Approach
+
+- Open with a quick one-word check-in to read the room, then honest context-setting that acknowledges the cancelled project in a sentence and moves on
+- Explicitly invite bold ideas early, so a team in recovery mode doesn't self-censor toward safe ones
+- Small groups of 3-4 cluster and build before whole-group sharing
+- Prioritize with an impact-vs-effort pass, filtered to what's realistically feasible within one quarter
+
+## Desired Output
+
+A written agenda including:
+- Section name, purpose, and duration for each block
+- Facilitator instructions and transition cues for each activity
+- A closing block that assigns owners and a follow-up date for the top three ideas
+
+## Reference Format
+
+A structure that previously worked well with this team:
+- 5 min context setting (problem only, no solutions)
+- 10 min silent brainstorm on sticky notes
+- Small group clustering, then whole group share
+- Dot voting to rank
+
+---
+
+## Suggestions for Improvement
+
+- **Hybrid contingency**: If anyone might join remotely, the sticky-note activities need a digital equivalent. Is this strictly in-person, or should the agenda carry a hybrid fallback?
+- **Capture and handoff**: How will the physical output get digitized and shared afterward? Deciding the capture method up front keeps ideas from evaporating once the room clears.
+- **Pre-work**: Sending the framing question a day early lets people arrive with seed ideas — helpful for the introverts, and it protects the tight timebox. Worth a short pre-read?
+- **Facilitator role**: Should the facilitator stay strictly neutral, or also contribute ideas? With a domain-heavy product team, a purely neutral facilitator sometimes leaves real expertise on the table.
+- **Decision rights**: Once the top three are ranked, who actually greenlights them — this group, or leadership afterward? Naming that at the close keeps the energy from fizzling into "nice ideas, no action."`,
   },
 ];
 

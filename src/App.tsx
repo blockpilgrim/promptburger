@@ -96,7 +96,7 @@ export default function App() {
                   <CanvasEditor />
                 </div>
                 {suggestions && !isRefining && (
-                  <SuggestionsPanel key={suggestions} suggestions={suggestions} />
+                  <SuggestionsPanel key={suggestions} suggestions={suggestions} onRefine={refine} />
                 )}
               </div>
             ) : (

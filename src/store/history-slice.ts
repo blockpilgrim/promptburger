@@ -50,6 +50,8 @@ export const createHistorySlice: StateCreator<AppStore, [], [], HistoryState> = 
     state.setContent(entry.canvas.content)
     state.setSuggestions(entry.canvas.suggestions)
     state.setIsEditable(true)
+    // Any in-progress answers belong to the generation being replaced
+    state.clearNoteResponses()
 
     // Restore stats if available
     state.setCurrentStats(entry.stats ?? null)
