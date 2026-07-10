@@ -83,15 +83,6 @@ export function useRefine() {
       // The answers are baked into the new generation; a fresh set of
       // notes deserves a clean slate. (Kept on error so a retry re-sends.)
       s.clearNoteResponses()
-
-      if (s.isDemoMode) {
-        const next = advanceDemoScenario()
-        s.setSelectedRoles(next.sidebar.roles)
-        s.setContext(next.sidebar.context)
-        s.setTaskBraindump(next.sidebar.task)
-        s.setConstraints(next.sidebar.constraints)
-        s.setExamples(next.sidebar.examples)
-      }
     }
 
     const onError = (error: Error) => {
@@ -108,7 +99,19 @@ export function useRefine() {
     }
 
     if (state.isDemoMode) {
-      simulateDemoStreaming(onChunk, onComplete, onError)
+      // Answering or dismissing a note re-grills the SAME scenario into its
+      // "v2"; a plain fire on an already-generated scenario moves the demo on
+      // to the next order so the sidebar and canvas stay on the same order.
+      const isDemoIteration = noteResponses.length > 0 || dismissedNotes.length > 0
+      if (isIteration && !isDemoIteration) {
+        const next = advanceDemoScenario()
+        state.setSelectedRoles(next.sidebar.roles)
+        state.setContext(next.sidebar.context)
+        state.setTaskBraindump(next.sidebar.task)
+        state.setConstraints(next.sidebar.constraints)
+        state.setExamples(next.sidebar.examples)
+      }
+      simulateDemoStreaming(onChunk, onComplete, onError, isDemoIteration)
     } else {
       const userMessage = assembleUserMessage({
         selectedRoles: state.selectedRoles,

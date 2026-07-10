@@ -7,11 +7,12 @@ export async function simulateDemoStreaming(
   onChunk: (text: string) => void,
   onComplete: (fullText: string, stats: RefinementStats) => void,
   onError: (error: Error) => void,
+  isIteration: boolean,
 ): Promise<void> {
   try {
     const startTime = Date.now()
     const scenario = getDemoScenario()
-    const fullResponse = scenario.response
+    const fullResponse = isIteration ? scenario.iteration : scenario.response
     const chunks = chunkifyResponse(fullResponse)
 
     let accumulated = ''
