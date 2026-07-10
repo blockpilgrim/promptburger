@@ -75,6 +75,19 @@ export function SettingsModal() {
           keep the grill running for everyone, usage is limited to a handful of
           prompts per hour.
         </p>
+
+        <p className="text-xs text-text-muted/70">
+          Enjoying this?{' '}
+          <a
+            href="https://buymeacoffee.com/leroi.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline hover:text-primary-hover"
+          >
+            Buy me a coffee
+          </a>
+          .
+        </p>
       </div>
       <div className="mt-6 flex justify-end">
         <Button variant="secondary" onClick={() => setSettingsOpen(false)}>
