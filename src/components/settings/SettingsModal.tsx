@@ -4,6 +4,7 @@ import { Modal } from '../shared/Modal'
 import { Button } from '../shared/Button'
 import { Play } from 'lucide-react'
 import { getDemoScenario, resetDemoIndex } from '../../constants/demo-responses'
+import { BUY_ME_A_COFFEE_URL } from '../../constants/links'
 
 export function SettingsModal() {
   const isOpen = useAppStore((s) => s.isSettingsOpen)
@@ -79,7 +80,7 @@ export function SettingsModal() {
         <p className="text-xs text-text-muted/70">
           Enjoying this?{' '}
           <a
-            href="https://buymeacoffee.com/leroi.ai"
+            href={BUY_ME_A_COFFEE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary underline hover:text-primary-hover"
