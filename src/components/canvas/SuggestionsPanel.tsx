@@ -91,11 +91,14 @@ function SuggestionItem({ children }: { children?: ReactNode }) {
             </button>
           ) : (
             <>
+              {/* Quiet by default so five notes don't shout at once, but never
+                  fully hidden — hover doesn't exist on touch, and this button
+                  is how users discover notes are answerable at all. */}
               {!isAnswered && (
                 <button
                   type="button"
                   onClick={() => setIsResponding(true)}
-                  className="flex items-center gap-1 rounded-md px-1.5 h-5 text-[11px] font-medium text-accent-foreground bg-accent/20 hover:bg-accent/35 transition-colors"
+                  className="flex items-center gap-1 rounded-md px-1.5 h-5 text-[11px] font-medium text-text-muted/70 transition-colors group-hover:bg-accent/20 group-hover:text-accent-foreground focus-visible:bg-accent/20 focus-visible:text-accent-foreground"
                   aria-label="Respond to this note"
                 >
                   <Reply className="h-3 w-3" />
