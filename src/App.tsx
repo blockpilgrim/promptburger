@@ -4,6 +4,7 @@ import { Sidebar } from './components/layout/Sidebar'
 import { Canvas } from './components/layout/Canvas'
 import { RoleSelector } from './components/sidebar/RoleSelector'
 import { ContextInput } from './components/sidebar/ContextInput'
+import { FixingsDivider } from './components/sidebar/FixingsDivider'
 import { TaskInput } from './components/sidebar/TaskInput'
 import { ConstraintsInput } from './components/sidebar/ConstraintsInput'
 import { ExamplesInput } from './components/sidebar/ExamplesInput'
@@ -72,9 +73,10 @@ export default function App() {
         onOpenHistory={() => setHistoryOpen(true)}
         sidebar={
           <Sidebar footer={<RefineButton onRefine={refine} />}>
+            <TaskInput />
+            <FixingsDivider />
             <RoleSelector />
             <ContextInput />
-            <TaskInput />
             <ConstraintsInput />
             <ExamplesInput />
             {blocks.map((block) => (
