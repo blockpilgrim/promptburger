@@ -3,7 +3,7 @@ import { BurgerIcon } from '../shared/BurgerIcon'
 const STEPS = [
   {
     title: 'Drop in The Patty',
-    body: "the task you want done. That's all the grill needs. Every Fixing below it is optional — but each one makes a better prompt.",
+    body: "the task you want done. That's all the grill needs. Every Fixing below it is optional, but always helpful.",
   },
   {
     title: 'Fire the Grill',

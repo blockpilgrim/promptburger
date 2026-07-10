@@ -22,7 +22,7 @@ export function Sidebar({ children, footer }: SidebarProps) {
 
   return (
     <aside className="flex w-[33%] min-w-[300px] max-w-[420px] shrink-0 flex-col border-r border-border bg-surface">
-      <div className="flex items-center justify-between border-b border-border px-4 py-2">
+      <div className="flex h-11 shrink-0 items-center justify-between border-b border-border px-4">
         <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
           Ingredients
         </span>
