@@ -68,4 +68,42 @@ export const ROLE_OPTIONS: GroupBase<RoleOption>[] = [
       { value: 'creative-technologist', label: 'Creative Technologist', group: 'Specialized' },
     ],
   },
+  {
+    label: 'Product & Strategy',
+    options: [
+      { value: 'product-manager', label: 'Product Manager', group: 'Product & Strategy' },
+      { value: 'technical-product-manager', label: 'Technical Product Manager', group: 'Product & Strategy' },
+      { value: 'product-owner', label: 'Product Owner', group: 'Product & Strategy' },
+      { value: 'program-manager', label: 'Program Manager', group: 'Product & Strategy' },
+      { value: 'project-manager', label: 'Project Manager', group: 'Product & Strategy' },
+      { value: 'business-analyst', label: 'Business Analyst', group: 'Product & Strategy' },
+      { value: 'agile-coach', label: 'Agile Coach / Scrum Master', group: 'Product & Strategy' },
+    ],
+  },
+  {
+    label: 'Marketing & Growth',
+    options: [
+      { value: 'growth-marketer', label: 'Growth Marketer', group: 'Marketing & Growth' },
+      { value: 'product-marketing-manager', label: 'Product Marketing Manager', group: 'Marketing & Growth' },
+      { value: 'content-strategist', label: 'Content Strategist', group: 'Marketing & Growth' },
+      { value: 'seo-specialist', label: 'SEO Specialist', group: 'Marketing & Growth' },
+      { value: 'copywriter', label: 'Copywriter', group: 'Marketing & Growth' },
+      { value: 'social-media-manager', label: 'Social Media Manager', group: 'Marketing & Growth' },
+      { value: 'brand-strategist', label: 'Brand Strategist', group: 'Marketing & Growth' },
+      { value: 'performance-marketer', label: 'Performance Marketer (Paid Ads)', group: 'Marketing & Growth' },
+    ],
+  },
+  {
+    label: 'Business & Entrepreneurship',
+    options: [
+      { value: 'founder', label: 'Founder / Entrepreneur', group: 'Business & Entrepreneurship' },
+      { value: 'startup-advisor', label: 'Startup Advisor', group: 'Business & Entrepreneurship' },
+      { value: 'business-strategist', label: 'Business Strategist', group: 'Business & Entrepreneurship' },
+      { value: 'management-consultant', label: 'Management Consultant', group: 'Business & Entrepreneurship' },
+      { value: 'operations-manager', label: 'Operations Manager', group: 'Business & Entrepreneurship' },
+      { value: 'sales-executive', label: 'Sales Executive', group: 'Business & Entrepreneurship' },
+      { value: 'customer-success-manager', label: 'Customer Success Manager', group: 'Business & Entrepreneurship' },
+      { value: 'venture-capitalist', label: 'Venture Capitalist / Investor', group: 'Business & Entrepreneurship' },
+    ],
+  },
 ]
