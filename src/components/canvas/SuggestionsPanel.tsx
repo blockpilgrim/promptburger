@@ -30,30 +30,34 @@ export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
 
   return (
     <div className="border-t border-border bg-surface/50 p-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      {/* The whole header row toggles the panel — a large, obvious target. */}
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+        aria-label={expanded ? "Hide Chef's Notes" : "Show Chef's Notes"}
+        className="group flex w-full cursor-pointer items-center justify-between"
+      >
+        <span className="flex items-center gap-2">
           <ChefHat className="h-4 w-4 text-accent-foreground" />
           <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
             Chef's Notes
           </span>
-        </div>
-        <button
-          onClick={() => setExpanded((v) => !v)}
-          className="flex items-center gap-1 text-xs text-text-muted hover:text-text transition-colors"
-          aria-expanded={expanded}
-          type="button"
-        >
+        </span>
+        {/* Panel is docked at the bottom: it grows upward to reveal and folds
+            downward to hide, so the chevron points the way the notes move. */}
+        <span className="flex items-center gap-1 text-xs text-text-muted transition-colors group-hover:text-text">
           {expanded ? (
             <>
-              Collapse <ChevronUp className="h-3.5 w-3.5" />
+              Hide <ChevronDown className="h-3.5 w-3.5" />
             </>
           ) : (
             <>
-              Expand <ChevronDown className="h-3.5 w-3.5" />
+              Show <ChevronUp className="h-3.5 w-3.5" />
             </>
           )}
-        </button>
-      </div>
+        </span>
+      </button>
 
       {/* grid-rows 1fr/0fr animates height smoothly without measuring content */}
       <div
