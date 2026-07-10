@@ -1,10 +1,7 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { ChefHat, ChevronDown, ChevronUp } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import { AddToFieldMenu } from './AddToFieldMenu'
-
-const COLLAPSED_MAX_HEIGHT = 180
-const OVERFLOW_THRESHOLD = 60
 
 function SuggestionItem({ children }: { children?: React.ReactNode }) {
   const textRef = useRef<HTMLSpanElement>(null)
@@ -22,71 +19,69 @@ interface SuggestionsPanelProps {
 }
 
 export function SuggestionsPanel({ suggestions }: SuggestionsPanelProps) {
-  const [expanded, setExpanded] = useState(false)
-  const [needsExpand, setNeedsExpand] = useState(false)
-  const contentRef = useRef<HTMLDivElement>(null)
+  const [expanded, setExpanded] = useState(true)
 
   // Strip the "## Suggestions for Improvement" heading — we render our own
   const body = suggestions
     .replace(/^##\s*Suggestions for Improvement\s*\n*/i, '')
     .trim()
 
-  useEffect(() => {
-    if (contentRef.current) {
-      const overflow = contentRef.current.scrollHeight - COLLAPSED_MAX_HEIGHT
-      setNeedsExpand(overflow > OVERFLOW_THRESHOLD)
-    }
-  }, [body])
-
   if (!body) return null
 
   return (
     <div className="border-t border-border bg-surface/50 p-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <ChefHat className="h-4 w-4 text-accent-foreground" />
           <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
             Chef's Notes
           </span>
         </div>
-        {needsExpand && (
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-1 text-xs text-text-muted hover:text-text transition-colors"
-          >
-            {expanded ? (
-              <>
-                Collapse <ChevronUp className="h-3.5 w-3.5" />
-              </>
-            ) : (
-              <>
-                Expand <ChevronDown className="h-3.5 w-3.5" />
-              </>
-            )}
-          </button>
-        )}
-      </div>
-      <div
-        ref={contentRef}
-        className="text-sm text-text-muted leading-relaxed overflow-hidden transition-[max-height] duration-200"
-        style={{ maxHeight: expanded || !needsExpand ? 'none' : `${COLLAPSED_MAX_HEIGHT}px` }}
-      >
-        <ReactMarkdown
-          components={{
-            p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-            ul: ({ children }) => <ul className="space-y-2.5">{children}</ul>,
-            li: SuggestionItem,
-            strong: ({ children }) => (
-              <strong className="font-medium text-text-muted">{children}</strong>
-            ),
-          }}
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="flex items-center gap-1 text-xs text-text-muted hover:text-text transition-colors"
+          aria-expanded={expanded}
+          type="button"
         >
-          {body}
-        </ReactMarkdown>
+          {expanded ? (
+            <>
+              Collapse <ChevronUp className="h-3.5 w-3.5" />
+            </>
+          ) : (
+            <>
+              Expand <ChevronDown className="h-3.5 w-3.5" />
+            </>
+          )}
+        </button>
       </div>
-      {needsExpand && !expanded && (
-        <div className="h-8 -mt-8 relative bg-gradient-to-t from-surface/90 to-transparent pointer-events-none" />
-      )}
+
+      {/* grid-rows 1fr/0fr animates height smoothly without measuring content */}
+      <div
+        className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+          expanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div
+            className="pt-4 text-sm text-text-muted leading-relaxed"
+            inert={!expanded ? true : undefined}
+            aria-hidden={!expanded}
+          >
+            <ReactMarkdown
+              components={{
+                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                ul: ({ children }) => <ul className="space-y-2.5">{children}</ul>,
+                li: SuggestionItem,
+                strong: ({ children }) => (
+                  <strong className="font-medium text-text-muted">{children}</strong>
+                ),
+              }}
+            >
+              {body}
+            </ReactMarkdown>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
