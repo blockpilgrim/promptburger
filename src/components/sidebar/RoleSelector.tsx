@@ -41,9 +41,9 @@ export function RoleSelector() {
           valueContainer: () => 'gap-1 flex flex-wrap',
           menu: () =>
             'mt-1 rounded-lg border border-border bg-surface-alt shadow-lg overflow-hidden',
-          menuList: () => 'max-h-60 overflow-y-auto py-1',
+          menuList: () => 'max-h-72 overflow-y-auto',
           groupHeading: () =>
-            'px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-text-muted',
+            'sticky top-0 z-10 border-b border-border bg-surface-raised px-3 py-2 text-xs font-bold uppercase tracking-wider text-accent-foreground',
           option: ({ isFocused, isSelected }) =>
             cn(
               'px-3 py-2 text-sm cursor-pointer transition-colors',
